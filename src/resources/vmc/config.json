@@ -1,0 +1,7 @@
+{
+  "dimension": 3,
+  "max_variations": 10,
+  "thermalization": 10,
+  "number_cycles": 100000,
+  "step_length": 1.0
+}

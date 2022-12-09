@@ -1,0 +1,55 @@
+\begin{thebibliography}{DLGMM17}
+
+\bibitem[BBZ16]{BBZ17survey}
+Imre B\'{a}r\'{a}ny, Pavle V.~M. Blagojevi\'{c}, and G\"{u}nter~M. Ziegler.
+\newblock Tverberg's theorem at 50: extensions and counterexamples.
+\newblock {\em Notices Amer. Math. Soc.}, 63(7):732--739, 2016.
+
+\bibitem[Bir59]{Birch:1959}
+B.~J. Birch.
+\newblock On {$3N$} points in a plane.
+\newblock {\em Proc. Cambridge Philos. Soc.}, 55:289--293, 1959.
+
+\bibitem[BZ17]{BZ17}
+Pavle V.~M. Blagojevi\'{c} and G\"{u}nter~M. Ziegler.
+\newblock Beyond the {B}orsuk-{U}lam theorem: the topological {T}verberg story.
+\newblock In {\em A journey through discrete mathematics}, pages 273--341.
+  Springer, Cham, 2017.
+
+\bibitem[DLGMM17]{de2017discrete}
+Jesus~A De~Loera, Xavier Goaoc, Fr{\'e}d{\'e}ric Meunier, and Nabil Mustafa.
+\newblock The discrete yet ubiquitous theorems of {C}arath\'eodory, {H}elly,
+  {S}perner, {T}ucker, and {T}verberg.
+\newblock {\em arXiv preprint arXiv:1706.05975}, 2017.
+
+\bibitem[Eck79]{Eckhoff:1979bi}
+J\"{u}rgen Eckhoff.
+\newblock Radon's theorem revisited.
+\newblock In {\em Contributions to geometry ({P}roc. {G}eom. {S}ympos.,
+  {S}iegen, 1978)}, pages 164--185. Birkh\"{a}user, Basel-Boston, Mass., 1979.
+
+\bibitem[Eck93]{Eck93survey}
+J\"{u}rgen Eckhoff.
+\newblock Helly, {R}adon, and {C}arath\'{e}odory type theorems.
+\newblock In {\em Handbook of convex geometry, {V}ol. {A}, {B}}, pages
+  389--448. North-Holland, Amsterdam, 1993.
+
+\bibitem[Mat02]{Matousek:2002td}
+Ji\v{r}\'{i} Matou\v{s}ek.
+\newblock {\em Lectures on discrete geometry}, volume 212 of {\em Graduate
+  Texts in Mathematics}.
+\newblock Springer-Verlag, New York, 2002.
+
+\bibitem[Rad21]{Radon:1921vh}
+Johann Radon.
+\newblock Mengen konvexer {K}\"{o}rper, die einen gemeinsamen {P}unkt
+  enthalten.
+\newblock {\em Math. Ann.}, 83(1-2):113--115, 1921.
+
+\bibitem[Tve01]{tve:recollections}
+Helge Tverberg.
+\newblock A combinatorial mathematician in {N}orway: some personal reflections.
+\newblock {\em Discrete Math.}, 241(1-3):11--22, 2001.
+\newblock Selected papers in honor of Helge Tverberg.
+
+\end{thebibliography}

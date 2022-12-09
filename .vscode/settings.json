@@ -1,0 +1,9 @@
+{
+    "python.autoComplete.extraPaths": ["./resources", "./src", "./test"],
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.extraPaths": [
+        "./resources",
+        "./src",
+        "./test"
+    ]
+}

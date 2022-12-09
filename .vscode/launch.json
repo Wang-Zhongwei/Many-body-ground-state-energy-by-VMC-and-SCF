@@ -1,0 +1,52 @@
+
+{
+  "version": "0.2.0",
+
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+    },
+
+    {
+      "name": "Python: int",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "${workspaceFolder}/src/resources/hf", 
+        "3.5",
+        "1.5"
+      ]
+    },
+
+    {
+      "name": "Python: scf",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/main/hf/scf.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "${workspaceFolder}/src/resources/hf", 
+        "${workspaceFolder}/data/hf" 
+      ]
+    },
+
+    {
+      "name": "Python: vmc",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/main/vmc/he.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": ["${workspaceFolder}/data/vmc/heh+_output.dat"] 
+    }
+  ]
+}
