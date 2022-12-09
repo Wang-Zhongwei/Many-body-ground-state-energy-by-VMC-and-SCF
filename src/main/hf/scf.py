@@ -5,6 +5,7 @@ import subprocess
 import sys
 
 import numpy as np
+from int import *
 import utils
 
 
@@ -117,6 +118,7 @@ def scf(resource_dir: str, data_dir: str, num_elec: int, alphas: tuple):
 
     # TODO: resolve type of atom by num_elec and append to data-dir accordingly
 
+    S = Sij()
     S = utils.load_data(os.path.join(resource_dir, 's.dat'))
     T = utils.load_data(os.path.join(resource_dir, 't.dat'))
     V = utils.load_data(os.path.join(resource_dir, 'v.dat'))
@@ -204,21 +206,21 @@ if __name__ == '__main__':
     dim = 2  # dim is the number of basis functions
 
     # initialize alphas
-    alphas = np.array([Nelec / 2, Nelec / 2])
+    alphas = np.array([3, 1])
     # update resources
     update_resource(resource_dir, alphas)
     # initialize number of trial steps
     steps = 100
     # initial step length
-    init_len = 0.1
+    init_len = 0.5
     # final step length aka prevision for alpha
-    final_len = 0.0001
+    final_len = 0.005
     # penalty factor for energy increase, equivalent to temperature reciprocal
     penalty = 100
 
     # use exponential decay learning rate
     def step_length(cur_step, init_len, final_len):
-        return init_len * np.exp(-cur_step / steps * np.log(final_len / init_len))
+        return init_len * np.exp(cur_step / steps * np.log(final_len / init_len))
 
     
     # Use simulated annealing to find optimized alphas

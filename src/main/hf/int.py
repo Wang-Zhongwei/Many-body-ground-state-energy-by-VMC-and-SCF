@@ -7,15 +7,14 @@ import numpy as np
 import utils
 
 
-def Sij(i: int, j: int, alpha_i: float, alpha_j: float):
+def Sij(i: int, j: int, alphas: tuple):
     """1-indexed overlap matrix of basis functions
     S_ij := <phi_i|phi_j> 
 
     Args:
         i (int): row
         j (int): column
-        alpha_i (float): alpha_i in the i-th basis function 
-        alpha_j (float): alpha_j in the j-th basis function
+        alphas (tuple): alphas in the basis functions
 
     Returns:
         _float: S_ij
@@ -23,58 +22,56 @@ def Sij(i: int, j: int, alpha_i: float, alpha_j: float):
     if i == j: 
         return 1
     if i > j:
-        return Sij(j, i, alpha_j, alpha_i)
+        return Sij(j, i, alphas=alphas)
     if i == 1:
         if j == 2:
-            return 16 * np.sqrt(6 * alpha_i**3 * alpha_j**5) / (2 * alpha_i + alpha_j)**4
+            return 16 * np.sqrt(6 * alphas[i - 1]**3 * alphas[j - 1]**5) / (2 * alphas[i - 1] + alphas[j - 1])**4
 
-def Tij(i: int, j: int, alpha_i: float, alpha_j: float):
+def Tij(i: int, j: int, alphas: tuple):
     """1-indexed kinetic energy matrix of basis functions
     T_ij := <phi_i| -1/2 * del^2 |phi_j> 
 
     Args:
         i (int): row
         j (int): column
-        alpha_i (float): alpha_i in the i-th basis function 
-        alpha_j (float): alpha_j in the j-th basis function
+        alphas (tuple): alphas in the basis functions
 
     Returns:
         _float: T_ij
     """    
     if i > j:
-        return Tij(j, i, alpha_j, alpha_i)
+        return Tij(j, i, alphas=alphas)
     if i == 1:
         if j == 1:
-            return alpha_i**2 / 2
+            return alphas[i - 1]**2 / 2
         if j == 2:
-            return -8 * alpha_i * (alpha_i - alpha_j) * np.sqrt(2/3 * alpha_i**3 * alpha_j**5) / (2 * alpha_i + alpha_j)**4
+            return -8 * alphas[i - 1] * (alphas[i - 1] - alphas[j - 1]) * np.sqrt(2/3 * alphas[i - 1]**3 * alphas[j - 1]**5) / (2 * alphas[i - 1] + alphas[i - 1])**4
     if i == 2:
         if j == 2:
-            return alpha_j**2 / 2
+            return alphas[j - 1]**2 / 2
 
-def Vij(i: int, j: int, alpha_i: float, alpha_j: float, Z: float = 4):
+def Vij(i: int, j: int, alphas: float, Z: float = 4):
     """1-indexed potential energy matrix of basis functions
     V_ij := <phi_i| -Z/r |phi_j> 
 
     Args:
         i (int): row
         j (int): column
-        alpha_i (float): alpha_i in the i-th basis function 
-        alpha_j (float): alpha_j in the j-th basis function
+        alphas (tuple): alphas in the basis functions
 
     Returns:
         _float: V_ij
     """    
     if i > j:
-        return Vij(j, i, alpha_j, alpha_i)
+        return Vij(j, i, alphas=alphas)
     if i == 1:
         if j == 1:
-            return -Z * alpha_i
+            return -Z * alphas[i - 1]
         if j == 2:
-            return -8 * Z *np.sqrt(2/3 * alpha_i**3 * alpha_j**5) / (2 * alpha_i + alpha_j)**3
+            return -8 * Z *np.sqrt(2/3 * alphas[i - 1]**3 * alphas[j - 1]**5) / (2 * alphas[i - 1] + alphas[j - 1])**3
     if i == 2:
         if j == 2:
-            return -Z * alpha_j / 4
+            return -Z * alphas[j - 1] / 4
 
 def tei(i: int, j: int, k: int, l: int, alphas: tuple):
     """1-indexed two-electron integrals
@@ -97,9 +94,16 @@ def tei(i: int, j: int, k: int, l: int, alphas: tuple):
     elif index == 20: # 2 2 2 2
         return 93/512 * alphas[1]
 
+# vectorize matrix calculation
+Sij = np.vectorize(Sij, excluded=['alphas'])
+Tij = np.vectorize(Tij, excluded=['alphas'])
+Vij = np.vectorize(Vij, excluded=['alphas'])
+tei = np.vectorize(tei, excluded=['alphas'])
+
 # generate data
 if __name__ == "__main__":
     import sys
+    from functools import partial
 
     if sys.argv[1] == '-h' or sys.argv[1] == '--help':
         print("Usage: python3 int.py [output_dir] [alpha1] [alpha2] ...")
@@ -116,33 +120,21 @@ if __name__ == "__main__":
     # save alphas 
     utils.save_data(alphas, output_dir + "/alphas.dat")
 
-    # generate overlap matrix
-    S = np.zeros((NUM_OF_BASIS, NUM_OF_BASIS))
-    for i in range(1, NUM_OF_BASIS+1):
-        for j in range(1, NUM_OF_BASIS+1):
-            S[i-1, j-1] = Sij(i, j, alphas[i - 1], alphas[j - 1])
+    # generate 2d mesh
+    rgn = np.arange(1, NUM_OF_BASIS+1)
+    ii, jj = np.meshgrid(rgn, rgn)
+
+    # generate 2d matrices
+    S = Sij(ii, jj, alphas=alphas)
+    T = Tij(ii, jj, alphas=alphas)
+    V = Vij(ii, jj, alphas=alphas)
+
+    # generate 4d mesh 
+    ii, jj, kk, ll = np.meshgrid(rgn, rgn, rgn, rgn)
+    # generate 4d matrices
+    g = tei(ii, jj, kk, ll, alphas=alphas)
+
     utils.save_data(S, output_dir + "/S.dat")
-
-    # generate kinetic energy matrix
-    T = np.zeros((NUM_OF_BASIS, NUM_OF_BASIS))
-    for i in range(1, NUM_OF_BASIS+1):
-        for j in range(1, NUM_OF_BASIS+1):
-            T[i-1, j-1] = Tij(i, j, alphas[i - 1], alphas[j - 1])
     utils.save_data(T, output_dir + "/T.dat")
-
-    # generate potential energy matrix
-    V = np.zeros((NUM_OF_BASIS, NUM_OF_BASIS))
-    for i in range(1, NUM_OF_BASIS+1):
-        for j in range(1, NUM_OF_BASIS+1):
-            V[i-1, j-1] = Vij(i, j, alphas[i - 1], alphas[j - 1])
     utils.save_data(V, output_dir + "/V.dat")
-
-    # generate two-electron integrals
-    g = np.zeros((NUM_OF_BASIS, NUM_OF_BASIS, NUM_OF_BASIS, NUM_OF_BASIS))
-    for i in range(1, NUM_OF_BASIS+1):
-        for j in range(1, NUM_OF_BASIS+1):
-            for k in range(1, NUM_OF_BASIS+1):
-                for l in range(1, NUM_OF_BASIS+1):
-                    g[i-1, j-1, k-1, l-1] = tei(i, j, k, l, alphas)
-
     utils.save_data(g, output_dir + "/g.dat")
