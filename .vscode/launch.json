@@ -34,8 +34,7 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
-        "${workspaceFolder}/src/resources/hf", 
-        "${workspaceFolder}/data/hf" 
+        "${workspaceFolder}/data/hf/annealing" 
       ]
     },
 

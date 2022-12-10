@@ -1,4 +1,5 @@
 import numpy as np
+import utils
 
 
 def symmetrize(Mat: np.ndarray):
@@ -53,10 +54,9 @@ def load_data(src: str):
     Args:
         src (str): source of the data
     """
-
     if not src.endswith('g.dat'):
         return np.loadtxt(src)
 
     with open(src, 'r') as f:
-        TEI = np.genfromtxt(src, dtype=None)
-        return {toIndex(row[0], row[1], row[2], row[3]): row[4] for row in TEI}  # Put in python dictionary
+        np.genfromtxt(src, dtype=None)
+        return {toIndex(l[0], l[1], l[2], l[3]): l[4] for l in TEI}

@@ -100,6 +100,45 @@ Tij = np.vectorize(Tij, excluded=['alphas'])
 Vij = np.vectorize(Vij, excluded=['alphas'])
 tei = np.vectorize(tei, excluded=['alphas'])
 
+
+def get2D(name: str, alphas: tuple):
+    set = {'S', 'T', 'V'}
+    if (name not in set):
+        raise ValueError("name must be one of {}".format(set))
+
+    num_of_basis = len(alphas)
+    rgn = np.arange(1, num_of_basis + 1)
+    ii, jj = np.meshgrid(rgn, rgn)
+    if name == 'S':
+        return Sij(ii, jj, alphas=alphas)
+    elif name == 'T':
+        return Tij(ii, jj, alphas=alphas)
+    else:
+        return Vij(ii, jj, alphas=alphas)
+    
+def get4D(name: str, alphas: tuple, use_Yoshimine: bool = False):
+    set = {'G'}
+    if (name not in set):
+        raise ValueError("name must be one of {}".format(set))
+
+    num_of_basis = len(alphas)
+    rgn = np.arange(1, num_of_basis + 1)
+    ii, jj, kk, ll = np.meshgrid(rgn, rgn, rgn, rgn)
+    if name == 'G':
+        ret = tei(ii, jj, kk, ll, alphas=alphas)
+    
+    
+    if not use_Yoshimine:
+        return ret
+    set = {}
+    for i in range(num_of_basis):
+        for j in range(num_of_basis):
+            for k in range(num_of_basis):
+                for l in range(num_of_basis):
+                    set[utils.toIndex(i + 1, j + 1, k + 1, l + 1)] = ret[i, j, k, l]
+    return set 
+       
+    
 # generate data
 if __name__ == "__main__":
     import sys
@@ -114,27 +153,17 @@ if __name__ == "__main__":
         exit(1)
 
     output_dir = sys.argv[1]
-    alphas = np.array(sys.argv[2:], dtype=float)
-    NUM_OF_BASIS = len(alphas)
+    ALPHAS = np.array(sys.argv[2:], dtype=float)
+    NUM_OF_BASIS = len(ALPHAS)
 
-    # save alphas 
-    utils.save_data(alphas, output_dir + "/alphas.dat")
+    S = get2D('S', ALPHAS)
+    T = get2D('T', ALPHAS)
+    V = get2D('V', ALPHAS)
+    G = get4D('G', ALPHAS)
 
-    # generate 2d mesh
-    rgn = np.arange(1, NUM_OF_BASIS+1)
-    ii, jj = np.meshgrid(rgn, rgn)
-
-    # generate 2d matrices
-    S = Sij(ii, jj, alphas=alphas)
-    T = Tij(ii, jj, alphas=alphas)
-    V = Vij(ii, jj, alphas=alphas)
-
-    # generate 4d mesh 
-    ii, jj, kk, ll = np.meshgrid(rgn, rgn, rgn, rgn)
-    # generate 4d matrices
-    g = tei(ii, jj, kk, ll, alphas=alphas)
-
+    # save data
+    utils.save_data(ALPHAS, output_dir + "/alphas.dat")
     utils.save_data(S, output_dir + "/S.dat")
     utils.save_data(T, output_dir + "/T.dat")
     utils.save_data(V, output_dir + "/V.dat")
-    utils.save_data(g, output_dir + "/g.dat")
+    utils.save_data(G, output_dir + "/G.dat")
