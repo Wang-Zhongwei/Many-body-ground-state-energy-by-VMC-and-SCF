@@ -21,8 +21,8 @@
       "justMyCode": true,
       "args": [
         "${workspaceFolder}/src/resources/hf", 
-        "3.5",
-        "1"
+        "3.68",
+        "1.91"
       ]
     },
 
@@ -34,6 +34,7 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
+        "4",
         "${workspaceFolder}/data/hf/annealing" 
       ]
     },

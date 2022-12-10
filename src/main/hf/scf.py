@@ -5,9 +5,12 @@ import subprocess
 import sys
 
 import numpy as np
-from int import * 
+from int import *
 import utils
 
+
+# resolve type of atom by num_elec
+num_to_atom = {2: 'He', 4: 'Be', 10: 'Ne'}
 
 def tei(a, b, c, d, TEI):
     """Return value of two electron integral <ab|1/r12|cd> where r12 is the distance between two electrons
@@ -124,6 +127,7 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
             f"Number of basis functions {dim} is less than half number of electrons {num_elec // 2}. System forbidden by Pauli Exclusion Principle!")
 
     # TODO: resolve type of atom by num_elec and append to data-dir accordingly
+    atom = num_to_atom.get(num_elec)
 
     if resource_dir:
         S = utils.load_data(os.path.join(resource_dir, 'S.dat'))
@@ -136,7 +140,6 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
         V = get2D('V', alphas)
         TEI = get4D('G', alphas, use_Yoshimine=True)
 
-
     # solve hf equations recursively
     H_core = T + V  # Form core Hamiltonian matrix as sum of one electron kinetic energy, T and potential energy, V matrices
 
@@ -147,14 +150,15 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
     SVAL_minhalf = (np.diag(1/np.sqrt(SVAL)))
     X = np.dot(SVEC, np.dot(SVAL_minhalf, np.transpose(SVEC)))
 
-    P_new = np.zeros((dim, dim)) # P represents the density matrix, Initially set to zero.
+    # P represents the density matrix, Initially set to zero.
+    P_new = np.zeros((dim, dim))
     delta = 1  # Set placeholder value for delta
     cnt = 0  # Count how many SCF cycles are done, N(SCF)
     energies = []
     deltas = []
 
     while delta > 0.00001:
-        cnt += 1 # Add one to number of SCF cycles counter
+        cnt += 1  # Add one to number of SCF cycles counter
 
         # Calculate Fock matrix, F
         F = makeFock(H_core, P_new, dim, TEI)
@@ -162,16 +166,16 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
         F_prime = toFPrime(X, F)
         # Diagonalize F' matrix
         _, C_prime = np.linalg.eigh(F_prime)
-        
+
         # 'Back transform' the coefficients into original basis using transformation matrix
         C = np.dot(X, C_prime)
         P_old = P_new
         P_new = makeDensity(C, dim, Nelec)  # Make density matrix
-        
+
         # Calculate energy
-        current_energy = calcEnergy(P_new, H_core, F)  
+        current_energy = calcEnergy(P_new, H_core, F)
         energies.append(current_energy)
-        
+
         # Test for convergence. If criteria is met exit loop and calculate properties of interest
         delta = deltaD(P_new, P_old)
         deltas.append(delta)
@@ -179,7 +183,7 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
     print("SCF procedure complete, TOTAL E(SCF) = {} hartrees".format(current_energy))
     if data_dir:
         # write to file
-        data_file = os.path.join(data_dir, 'Be.dat')
+        data_file = os.path.join(data_dir, atom + '.dat')
         data = np.column_stack((energies, deltas))
         utils.save_data(data_file, data)
         return print("All iteration data written to {}".format(data))
@@ -187,12 +191,12 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
         return current_energy
 
 
-def update_resource(resource_dir: str, alphas: tuple):
+def update_resource(alphas: tuple, resource_dir: str):
     """Feed alphas to int.py and update resources in resource_dir
 
     Args:
-        resource_dir (str): resource directory that contains Fock matrix elements
         alphas (tuple): alpha arguments in basis functions
+        resource_dir (str): resource directory that contains Fock matrix elements
     """
 
     # convert alphas to tuple of strings so that it can be passed to subprocess
@@ -210,18 +214,25 @@ if __name__ == '__main__':
 
     # get from input resource directory and data directory
     if sys.argv[1] == '-h' or sys.argv[1] == '--help':
-        print('Usage: python scf.py <path/to/data/folder>')
+        print('Usage: python scf.py <num_elec> <data_dir>')
+        print("""Description: Run Hartree-Fock calculation for given number of electrons. Closed shell system is assumed, which means 
+        that number of electrons is even and the number of basis functions is half of the number of electrons. 
+        Alphas in the basis functions are initialized to [3, 1] and to be optimized by simulated annealing process. 
+        Data is written to .""")
         sys.exit(0)
 
-    if len(sys.argv) != 2:
-        print('Usage: python scf.py <path/to/data/folder>')
+    if len(sys.argv) != 3:
+        print('Usage: python scf.py <num_elec> <data_dir>')
         sys.exit(1)
 
-    out_dir = sys.argv[1]
+    Nelec = int(sys.argv[1])
+    out_dir = sys.argv[2]
 
-    # define dimension of the system or take from inputs
-    Nelec = 4  # The number of electrons in our system
-    dim = 2  # dim is the number of basis functions
+    # dim is the number of basis functions. Here closed shell system is assumed
+    dim = Nelec // 2
+
+    # resolve atom type by number of electrons
+    atom = num_to_atom.get(Nelec)
 
     # initialize alphas
     alphas = np.array([3, 1])
@@ -232,7 +243,7 @@ if __name__ == '__main__':
     # final step length aka prevision for alpha
     final_len = 0.005
     # penalty factor for energy increase, equivalent to temperature reciprocal
-    penalty = 100
+    penalty = 50
 
     # use exponential decay learning rate
     def step_length(cur_step, init_len, final_len):
@@ -242,7 +253,7 @@ if __name__ == '__main__':
     current_energy = float('inf')
     accept = 0
     alphas_data = []
-    energy_data =[]
+    energy_data = []
     for i in range(cycles):
         # get step length
         step_len = step_length(i, init_len, final_len)
@@ -254,7 +265,7 @@ if __name__ == '__main__':
         trial_energy = scf(Nelec, trial_alphas)
 
         if (trial_energy > current_energy and
-                np.random.rand() > np.exp(-penalty * (trial_energy - current_energy) / np.abs(current_energy))):
+                np.random.rand() > np.exp(-penalty * (i + 1) * (trial_energy - current_energy) / np.abs(current_energy))):
             # reject the trial
             continue
 
@@ -273,6 +284,6 @@ if __name__ == '__main__':
     print('Optimized alphas: ', alphas)
     print('Minimized energy: ', current_energy)
 
-    # TODO: save annealing data and final result to file
     data = np.column_stack((alphas_data, energy_data))
-    utils.save_data(data, os.path.join(out_dir, 'Be_annealing.dat'))
+    utils.save_data(data, os.path.join(out_dir, atom + '_annealing.dat'))
+    update_resource(alphas, 'src/resources/hf')

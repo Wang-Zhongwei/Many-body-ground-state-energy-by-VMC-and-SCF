@@ -1,3 +1,4 @@
 .vscode
 paper
-*.dat
+.dat
+.pyc
