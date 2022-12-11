@@ -1,5 +1,4 @@
 import numpy as np
-import utils
 
 
 def symmetrize(Mat: np.ndarray):

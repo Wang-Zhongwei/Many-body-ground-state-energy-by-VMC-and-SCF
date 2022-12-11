@@ -5,32 +5,16 @@ import math
 import sys
 from random import random
 
-import numpy
+import numpy as np
 
 # Read name of output file from command line
 if len(sys.argv) != 2:
-    print('Usage: python he.py <path/to/output>')
+    print('Usage: python he.py <out_file>')
     sys.exit(1)
 outfileName = sys.argv[1]
 
-# Initialization function
-
-def initialize():
-    number_particles = eval(raw_input('Number of particles: '))
-    charge = eval(raw_input('Charge of nucleus: '))
-    dimension = eval(raw_input('Dimensionality: '))
-    max_variations = eval(
-        raw_input('Number of variational parameter values: '))
-    thermalisation = eval(raw_input('Number of thermalization steps: '))
-    number_cycles = eval(raw_input('Number of MC cycles: '))
-    step_length = eval(raw_input('Step length: '))
-
-    return number_particles, charge, dimension, max_variations, thermalisation, number_cycles, step_length
-
 # Trial wave function
-
-
-def wave_function(r):
+def wave_function(r: np.ndarray):
     argument = 0.0
 
     for i in range(NUM_OF_PARTICLES):
@@ -84,9 +68,36 @@ def local_energy(r, wf):
 
     return e_potential + e_kinetic
 
+def evaluate_energy(initial_state: np.ndarray, wave_function, neighborhood_function, num_cycles: int, thermalization: int):
+    # initialize state and wave function
+    state = initial_state
+    wf = wave_function(state)
+    # Initialize energy and energy squared
+    energy = energy2 = 0.0
+    # Initialize acceptance counter
+    accept = 0
+    for cycle in range(num_cycles+thermalization):
+        # Trial position
+        next_state = neighborhood_function(state)
+        next_wf = wave_function(next_state)
+        # Metropolis test to see whether we accept the move
+        if random() < next_wf**2 / wf**2:
+            state = next_state
+            wf = next_wf
+            accept += 1
+        # If we are done with thermalization, we add to the statistics
+        if cycle >= thermalization:
+            delta_e = local_energy(state, wf)
+            energy += delta_e
+            energy2 += delta_e**2
+    # Return the average energy and its error and acceptance rate
+    energy /= num_cycles
+    energy2 /= num_cycles
+    error = np.sqrt(energy2 - energy**2)
+    return energy, error, accept/num_cycles
+
 
 # Here starts the main program
-
 NUM_OF_PARTICLES = 2
 CHARGE = 2
 DIMENSION = 3
@@ -95,18 +106,17 @@ THERMALIZATION = 10
 NUM_OF_CYCLES = 100000
 STEP_LENGTH = 1.0
 
-outfile = open(outfileName, 'w')
-
 alpha = 0.5 * CHARGE  # variational parameter
 
 # Step length for numerical differentiation and its inverse squared
 h = .001
 h2 = 1/(h**2)
 
-r_old = numpy.zeros((NUM_OF_PARTICLES, DIMENSION), numpy.double)
-r_new = numpy.zeros((NUM_OF_PARTICLES, DIMENSION), numpy.double)
+r_old = np.zeros((NUM_OF_PARTICLES, DIMENSION), np.double)
+r_new = np.zeros((NUM_OF_PARTICLES, DIMENSION), np.double)
 
 # Loop over alpha values
+outfile = open(outfileName, 'w')
 for variate in range(MAX_VARIATIONS):
 
     alpha += .1
@@ -115,44 +125,13 @@ for variate in range(MAX_VARIATIONS):
     delta_e = 0.0
 
     # Initial position
-    for i in range(NUM_OF_PARTICLES):
-        for j in range(DIMENSION):
-            r_old[i, j] = STEP_LENGTH * (random() - .5)
+    initial_state = STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION))
 
-    wfold = wave_function(r_old)
+    energy, error, accept = evaluate_energy(initial_state, wave_function, lambda r: r + STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION)), NUM_OF_CYCLES, THERMALIZATION)
 
-    # Loop over MC cycles
-    for cycle in range(NUM_OF_CYCLES+THERMALIZATION):
-
-        # Trial position
-        for i in range(NUM_OF_PARTICLES):
-            for j in range(DIMENSION):
-                r_new[i, j] = r_old[i, j] + STEP_LENGTH * (random() - .5)
-
-        wfnew = wave_function(r_new)
-
-        # Metropolis test to see whether we accept the move
-        if random() < wfnew**2 / wfold**2:
-            r_old = r_new.copy()
-            wfold = wfnew
-            accept += 1
-
-        # If we are done with thermalization, we add to the statistics
-        if cycle >= THERMALIZATION:
-            delta_e = local_energy(r_old, wfold)
-            energy += delta_e
-            energy2 += delta_e**2
-
-    # We calculate mean, variance and error ...
-    energy /= NUM_OF_CYCLES
-    energy2 /= NUM_OF_CYCLES
-    variance = energy2 - energy**2
-    error = math.sqrt(variance/NUM_OF_CYCLES)
-
-    # ...and write them to file
-    outfile.write('%f %f %f %f %f\n' % (alpha, energy, variance,
-                  error, accept*1.0/(NUM_OF_CYCLES+THERMALIZATION)))
-
+    # For a given alpha, write results to file
+    outfile.write('%f %f %f %f\n' % (alpha, energy,
+                    error, accept*1.0/(NUM_OF_CYCLES+THERMALIZATION)))
 outfile.close()
 
 print('\nDone. Results are in the file "%s", formatted as:\n\

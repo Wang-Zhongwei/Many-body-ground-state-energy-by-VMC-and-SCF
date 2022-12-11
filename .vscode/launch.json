@@ -43,10 +43,10 @@
       "name": "Python: vmc",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/src/main/vmc/he.py",
+      "program": "${workspaceFolder}/src/main/vmc/vmc.py",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "args": ["${workspaceFolder}/data/vmc/heh+_output.dat"] 
+      "args": ["${workspaceFolder}/data/vmc/He.dat"] 
     }
   ]
 }
