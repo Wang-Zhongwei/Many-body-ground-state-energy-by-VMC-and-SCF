@@ -30,7 +30,7 @@
       "name": "Python: scf",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/src/main/hf/scf.py",
+      "program": "${workspaceFolder}/src/main/scf.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
@@ -43,7 +43,7 @@
       "name": "Python: vmc",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/src/main/vmc/vmc.py",
+      "program": "${workspaceFolder}/src/main/vmc.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": ["${workspaceFolder}/data/vmc/He.dat"] 

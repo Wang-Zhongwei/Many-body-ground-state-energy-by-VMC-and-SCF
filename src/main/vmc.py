@@ -5,25 +5,29 @@ import math
 import sys
 from random import random
 
+# import annealing
 import numpy as np
+
+from annealing import *
 
 # Read name of output file from command line
 if len(sys.argv) != 2:
     print('Usage: python he.py <out_file>')
     sys.exit(1)
 outfileName = sys.argv[1]
-
+r_abs = lambda r: np.sqrt(np.sum(r**2, axis=-1))
 # Trial wave function
 def wave_function(r: np.ndarray):
-    argument = 0.0
 
-    for i in range(NUM_OF_PARTICLES):
-        r_single_particle = 0.0
-        for j in range(DIMENSION):
-            r_single_particle += r[i, j]**2
-        argument += math.sqrt(r_single_particle)
+    # single body part
+    wf = np.exp(-alpha * np.sum(r_abs(r)))
 
-    return math.exp(-argument*alpha)
+    # two body part
+    for i in range(r.shape[0]):
+        for j in range(i+1, r.shape[0]):
+            r_ij = r_abs(r[i] - r[j])
+            wf *= np.exp(r_ij / (1 + beta * r_ij))
+    return wf
 
 # Local energy (numerical derivative)
 # the argument wf is the wave function value at r (so we don't need to calculate it again)
@@ -69,6 +73,8 @@ def local_energy(r, wf):
     return e_potential + e_kinetic
 
 def evaluate_energy(initial_state: np.ndarray, wave_function, neighborhood_function, num_cycles: int, thermalization: int):
+    # markov chain monte carlo
+
     # initialize state and wave function
     state = initial_state
     wf = wave_function(state)
@@ -103,10 +109,12 @@ CHARGE = 2
 DIMENSION = 3
 MAX_VARIATIONS = 10
 THERMALIZATION = 10
-NUM_OF_CYCLES = 100000
-STEP_LENGTH = 1.0
+NUM_OF_CYCLES = 10000 # one less zero during test
+R_STEP_LENGTH = 1.0
+PARAM_STEP_LENGTH = 0.1
 
 alpha = 0.5 * CHARGE  # variational parameter
+beta = 0.0
 
 # Step length for numerical differentiation and its inverse squared
 h = .001
@@ -125,14 +133,17 @@ for variate in range(MAX_VARIATIONS):
     delta_e = 0.0
 
     # Initial position
-    initial_state = STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION))
-
-    energy, error, accept = evaluate_energy(initial_state, wave_function, lambda r: r + STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION)), NUM_OF_CYCLES, THERMALIZATION)
+    energy, error, accept = evaluate_energy(initial_state, wave_function, lambda r: r + R_STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION)), NUM_OF_CYCLES, THERMALIZATION)
 
     # For a given alpha, write results to file
     outfile.write('%f %f %f %f\n' % (alpha, energy,
                     error, accept*1.0/(NUM_OF_CYCLES+THERMALIZATION)))
 outfile.close()
 
+initial_state = R_STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION))
+neighborhood_func = lambda r: r + PARAM_STEP_LENGTH * np.random.uniform(-1, 1, (NUM_OF_PARTICLES, DIMENSION))
+temperature_func = lambda i: 1.0/(i+1)
+simulated_annealing(initial_state, evaluate_energy, neighborhood_func, temperature_func, 20)
+
 print('\nDone. Results are in the file "%s", formatted as:\n\
-alpha, <energy>, variance, error, acceptance ratio' % outfileName)
+alpha, <energy>, error, acceptance ratio' % outfileName)
