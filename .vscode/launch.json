@@ -46,7 +46,7 @@
       "program": "${workspaceFolder}/src/main/vmc.py",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "args": ["${workspaceFolder}/data/vmc/He.dat"] 
+      "args": ["${workspaceFolder}/data/vmc/x.dat"] 
     }
   ]
 }
