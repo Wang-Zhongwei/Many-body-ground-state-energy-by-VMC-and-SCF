@@ -1,13 +1,16 @@
 # Adapted from morten hjorth-jensen https://github.com/CompPhysics/ComputationalPhysics 
 # author: Zhongwei Wang
 
+import logging
 import math
 import sys
-from random import random
 from functools import partial
+from random import random
 
 import numpy as np
 from annealing import *
+
+logging.basicConfig(level=logging.INFO)
 
 # Read name of output file from command line
 if len(sys.argv) != 2:
@@ -15,20 +18,19 @@ if len(sys.argv) != 2:
     sys.exit(1)
 outfileName = sys.argv[1]
 
+r_abs = lambda r: np.sqrt(np.sum(r**2, axis=-1))
 # Trial wave function
-def wave_function(r: np.ndarray, alpha, beta):
-    argument = 0.0
+def wave_function(r: np.ndarray, alpha: float, beta: float):
 
-    for i in range(NUM_OF_PARTICLES):
-        r_single_particle = 0.0
-        for j in range(DIMENSION):
-            r_single_particle += r[i, j]**2
-        argument += math.sqrt(r_single_particle)
+    # single body part
+    wf = np.exp(-alpha * np.sum(r_abs(r)))
 
-    return math.exp(-argument*alpha)
-
-# Local energy (numerical derivative)
-# the argument wf is the wave function value at r (so we don't need to calculate it again)
+    # two body part
+    for i in range(r.shape[0]):
+        for j in range(i+1, r.shape[0]):
+            r_ij = r_abs(r[i] - r[j])
+            wf *= np.exp(r_ij / (1 + beta * r_ij))
+    return wf
 
 
 def local_energy(r, wave_function):
@@ -71,9 +73,9 @@ def local_energy(r, wave_function):
 
     return e_potential + e_kinetic
 
-def evaluate_energy(wf_params, num_cycles: int, thermalization: int):
+def evaluate_energy(alpha, beta, num_cycles: int, thermalization: int):
     # Bind wave function to wf_params
-    alpha, beta = wf_params
+    # alpha, beta = wf_params
     concrete_wave_func = partial(wave_function, alpha=alpha, beta=beta)
 
     # Initialization
@@ -104,6 +106,7 @@ def evaluate_energy(wf_params, num_cycles: int, thermalization: int):
     energy2 /= num_cycles
     error = np.sqrt(energy2 - energy**2)
     acceptance = accept / (num_cycles + thermalization)
+    logging.info(f'(alpha, beta) = ({alpha}, {beta}); energy = {energy}, error = {error}, acceptance = {acceptance}')
 
     return energy, error ,acceptance
 
@@ -126,4 +129,13 @@ h2 = 1/(h**2)
 
 initial_state = np.array([1.5, 0]) # initial state of (alpha, beta) 
 neighbor_func = lambda v: v + np.random.uniform(-1, 1, 2) * PARAM_STEP_LENGTH
-simulated_annealing(initial_state, evaluate_energy, neighbor_func, temperature_function=lambda i: 0.05/(i+1), max_iterations=20, num_cycles=NUM_OF_CYCLES, thermalization=THERMALIZATION)
+# simulated_annealing(initial_state, evaluate_energy, neighbor_func, temperature_function=lambda i: 0.05/(i+1), max_iterations=20, num_cycles=NUM_OF_CYCLES, thermalization=THERMALIZATION)
+
+# vectorize simulated_annealing 
+evaluate_energy = np.vectorize(evaluate_energy, excluded=['num_cycles', 'thermalization'])
+alpha_rgn = np.arange(1.0, 2.1, 0.1)
+beta_rgn = np.arange(1.0, 2.0, 0.1)
+alpha_mesh, beta_mesh = np.meshgrid(alpha_rgn, beta_rgn)
+
+
+evaluate_energy(alpha_mesh, beta_mesh, NUM_OF_CYCLES, THERMALIZATION) # forced to change interface...
