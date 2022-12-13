@@ -2,6 +2,8 @@
 \usepackage{amsmath, amssymb, amscd, amsthm, amsfonts}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{biblatex}
+\addbibresource{references.bib}
 
 \oddsidemargin 0pt
 \evensidemargin 0pt
@@ -13,7 +15,8 @@
 \textwidth 6.65in
 \linespread{1.2}
 
-\title{Solve the ground state for He, Be and Ne atom}
+
+\title{Numerical Methods for Solving Fermion System Ground State}
 \author{Zhongwei Wang}
 \date{2022 Autumn}
 
@@ -31,39 +34,41 @@
 
 \maketitle
 
-\begin{abstract}
-This survey presents an overview of 
+\begin{abstract}\footnote[0]{Source code available on \href{https://github.com/Wang-Zhongwei/Many-body-ground-state-energy-by-VMC-and-SCF/tree/main}{Github}}
+This article presents numerical methods in solving the ground state of Fermion system, including self-consistent field (SCF) theory and variational monte carlo (VMC). 
+As a demonstration of the algorithms, Helium and Beryllium atoms are solved independently by each algorithm in succession. 
+Then a combination of the two methods is used to produce better ground state for Beryllium atom. 
+It shows that each method alone produces results within 3\% of the exact value, while the combination of the two methods reduces the error to 0.1\% at least for the systems chosen in the article. (He and Be atoms)
 \end{abstract}
 
 \section{Introduction}\label{section-introduction}
-Variational Monte Carlo (VMC) is a powerful method to solve the ground state of quantum many-body systems.  
-In this paper, we will use VMC combined with self-consistent (SCF) theory to solve the ground state for He, Be and Ne atom. The Hamiltonian for an atomic system is
+Hamiltonians for a Fermion system has a general expression as follows:
 \begin{equation}\label{eq:hamiltonian}
 \hat{H} = \frac{1}{2}\sum_{i}\nabla_i^2  - \sum_i \frac{Z}{r_i} + \frac{1}{2}\sum_{i \neq j} \frac{1}{|r_i-r_j|},
 \end{equation}
-where
 \begin{itemize}
     \item first two terms are called single body term, representing electron-nucleus interaction;
     \item last term called many body term, representing electron-electron interaction, which can be then break down into 
     direct term $J$ and exchange term $K$; 
 \end{itemize}
-Without it, system eigen states would be simply produced by Slater determinants. 
-Otherwise, the system is not solvable analytically.
+Without the last term, system eigen states would be simply produced by Slater determinants. Otherwise, the system is not solvable analytically.
 
+Common numerical methods for solving many body quantum systems include Variational Monte Carlo (VMC) \cite{First_VMC} methods, density functional theory (DFT) \cite{First-DFT}, and Self-consistent field (SCF) \cite{Early-SCF} thoery. 
+These methods use various computational techniques to approximate the solutions to many body quantum systems. This article, in particular, uses self-consistent field (SCF) theory and Variational Monte Carlo (VMC) to solve the ground state of Helium and Beryllium. 
+There are several mature libraries and software packages for quantum Monte Carlo and density functional theory simulation. For example, \href{https://www.quantum-espresso.org/}{Quantum ESPRESSO}, \href{https://qmcpack.org/}{QMCPACK}, \href{https://vallico.net/casinoqmc/}{CASINO} for VMC; \href{https://www.nwchem-sw.org/}{NWChem} and \href{https://dftbplus.org/}{DFTB+} for DFT. 
+
+But for the purpose of illumination only, in this article I opt to implement them ground up. For the next two chapters I am going to review the principles of the two algorithms and lay out the procedure to solve the specific problems in conern, which is ground state of Helium and Beryllium.
 
 \section{Principle}
-In this chapter we derive important conclusions and procedure that we used in the numerical calculation. 
-For simplicity's sake, the system we only consider is a closed shell system where there are $N/2$ different spatial orbits given $N$ electrons.
-Further discussions about open shell and closed shell please go to \ref{?}.
-
+In this chapter, derivation of the whole theory is not the main focus. One can refer to \cite{Derivation_of_Fock_matrix} \cite{Review_of_VMC} for detailed derivations. Instead, we review important conclusions about and stipulate notations for SCF and VMC.
 \subsection{Hartree-Fock equations}
 The Hartree-Fock self-consistent field (SCF) theory is a method used in quantum chemistry to approximate the wave function and energy of a many-electron system. 
-The theory is based on the Hartree-Fock approximation, which assumes that the many-electron wave function can be represented as a product of single-electron wave functions, or orbitals. 
+The theory is based on the Hartree-Fock approximation, which assumes that the many-electron wave function can be represented as a determinant, known as Slater determinant, of single-electron wave functions (often not orthogonal), or orbitals. 
 The SCF method involves iteratively solving the Hartree-Fock equations to determine the orbitals and the energy of the system, and then using these solutions as the starting point for the next iteration. 
 This process is repeated until the solutions converge to a self-consistent set of orbitals and energy, which represents the best approximation of the true wave function and energy of the system.
 
 Adapted from original Hamiltonian \ref{eq:hamiltonian}(How?). Hartree-Fock equation for a closed-shell atomic system reads as follows:
-\cite{?}
+\cite{Fock_matrix_source}
 \begin{equation}
 \label{eq:hartree-fock}
 \hat{f}(r_i) = \hat{h}(r_i)+\sum_{a=1}^{N/2}(2\hat{J}_a(r_i)-\hat{K}_a(r_i))
@@ -75,48 +80,66 @@ where
     \item $\hat{J}_a(r_i)$: direct operator attributed to electron-electron coulomb repulsion;
     \item $\hat{K}_a(r_i)$: exchange operator attributed to same-spin electron exchange effect. The factor is half of that of the direct operator. 
 \end{itemize}
-Choose a set of normal basis (not necessarily orthogonal) $\{\phi_1, ... , \phi_m\}$. The Fock operator under the representation is:
+One strong assumption of SCF is that the composite wavefunction can be written as the determinant of basis functions evaluated at each electron position. 
+
+\begin{align*}
+    \Psi(r_1, r_2, ..., r_N) &= 
+    \begin{vmatrix}
+    \psi_1(r_1) & \psi_2(r_1)  & \cdots & \psi_N(r_1) \\ 
+    \psi_1(r_2) & \psi_2(r_2) & \cdots & \psi_N(r_2) \\ 
+    \vdots & \vdots& \ddots & \vdots \\
+    \psi_1(r_N) & \psi_2(r_N) & \cdots & \psi_N(r_N) \\ 
+    \end{vmatrix} \\
+\end{align*}
+
+Remeber set of basis $\{\psi_1, ... , \psi_m\}$ is not neccessarily orthogonal. The Fock operator under the representation becomes:
 \begin{equation}\label{eq:fock-representation}
-    F_{\mu\nu}=H^{core}_{\mu\nu} + \sum_{a=1}^{N/2}(2(\mu\nu|aa)-(\mu a|a\nu))
+    F_{\mu\nu}=H^{core}_{\mu\nu} + G_{\mu\nu}
 \end{equation}
 where 
 \begin{itemize}
-    \item $F_{\mu\nu} = \int{dr_1 \phi_{\mu}^*(r_)}$
-    \item $(\mu\nu|aa)$: direct operator;
-    \item $(\mu a|a\nu)$: exchange operator;
+    \item $H^{core}_{\mu \nu} = \int{dv1 \phi_{\mu}^*(r_1)\hat{h}_1(r_1)\phi_{\nu}(r_1)}$; $\hat{h}_1(r_1)=-\frac{1}{2}\nabla^2_1-\frac{Z}{r_1}$; single body term.
+    \item $G_{\mu\nu} = \sum_{a=1}^{N/2}(2(\mu\nu|aa)-(\mu a|a\nu))$
+    \item $(\mu\nu|aa)=\int{dv_1 dv_2 \psi_{\mu}^*(r_1)\psi_{\nu}(r_1) \frac{1}{r_{12}} \psi_a^*(r_2)\psi_a(r_2)}$; direct term.
+    \item $(\mu a|a\nu)=\int{dv_1 dv_2 \psi_{\mu}^*(r_1)\psi_{a}(r_1) \frac{1}{r_{12}} \psi_a^*(r_2)\psi_{\nu}(r_2)}$; exchange term.
 \end{itemize}
 
-More formally, given $X\subset \rr^d$ of $(r-1)(d+1)+1$ points, there is a partition $X=X_1\cup \dots \cup X_r$ such that $\bigcap_{j=1}^r \conv X_j \ne \emptyset$. Such a partition is called a
- \textit{Tverberg partition}. The number of points in this result is optimal, as a dimension-counting argument shows. In fact, if $X$ is in general enough position and in the partition $X=X_1\cup \ldots \cup X_r$ we have $1\le |X_j|\le d+1$ for every $j$, then $\bigcap_{j=1}^r \aff X_j$ is a single point if $|X|= (r-1)(d+1)+1$, and is empty if $|X|\le (r-1)(d+1)$.
+The relation between energy and Fock operator is:
+\begin{equation}
+    E(\Psi(r_1, r_2, ..., r_N)) = \sum_{\mu, \nu} (H_{\mu\nu} + \frac{1}{2}G_{\mu\nu}) = \frac{1}{2} \sum_{\mu, \nu} (H_{\mu\nu} + F_{\mu\nu})
+\end{equation}
 
- % The case $r=2$ was proved first by Radon, as a lemma in his proof of Helly's theorem.
+However, it is more convient to choose another set of basis $\{\phi_1, \phi_2, ... \phi_N\}$ with relation $\psi_j = \sum_{i}\phi_{i} \cdot C_{ij}$, where $C_{ij}$ is called the coefficient matrix. 
 
-The last decade has seen an impressive sequence of results around Tverberg's theorem.  The purpose of this survey is to give a broad overview of  the current state of the field and point out key open problems.  Other surveys covering different aspects of Tverberg's theorem can be found in \cite{Eckhoff:1979bi, Eck93survey, Matousek:2002td, BBZ17survey, de2017discrete, BZ17}.
+\subsection{Variational Monte Carlo}
 
-The paper is organized as follows.  In sections \ref{section-topological} and \ref{section-colored} we describe the topological and colorful versions of Tverberg's theorem, which have received the most attention in recent years.  In sections \ref{section-intersection} and \ref{section-universal} we discuss a large number of variations and conjectures around Tverberg's theorem.  In Section \ref{section-applications} we describe some applications of Tverberg's theorem.  Finally, in Section \ref{section-spaces} we present Tverberg-type results where the settings have changed dramatically, such as Tverberg for convexity spaces or quantitative versions.  In that last section, we focus mostly on results which are related to geometry.
 
-\subsection{Interlude: a short history of Tverberg's theorem}
-An early predecessor of Tverberg's theorem is Radon's lemma from 1921 \cite{Radon:1921vh, Eckhoff:1979bi}. Radon used it in his proof of Helly's theorem. It says that \textit{any set $X$ of $d+2$ points in $\rr^d$ can be split into two sets whose convex hulls intersect}. So it is the case $r=2$ of Tverberg's theorem. Its proof is simple: the $d+2$ vectors in $X$ have a nontrivial affine dependence $\sum_{x \in X}\al(x)x=0$ and  $\sum_{x \in X}\al(x)=0$. The sets $X_1=\{x \in X: \al(x)\ge 0\}$ and $X_2=\{x \in X: \al(x) < 0\}$ form a partition of $X$ and their convex hulls intersect, as one can easily check.
+\section{Procedure}
 
-Another result linked to this theorem is Rado's centerpoint theorem.  This states that \textit{for any set $X$ of $n$ points in $\rr^d$, there is a point $p$ such that any closed half-space that contains $p$ also contains at least $\left\lceil \frac{n}{d+1}\right\rceil$ points of $X$}. The standard proof of this result uses Helly's theorem. Tverberg's theorem implies it in few lines: setting $r=\left\lceil \frac{n}{d+1}\right\rceil$, there is a partition of $X$ into $r$ parts $X_1,\ldots,X_r$ and a point $p\in \rr^d$ such that $p \in \bigcap_{j=1}^r \conv X_j$. Then $p$ is a centerpoint of $X$: every closed halfspace containing $p$ contains at least one point from each $X_j$.
+For simplicity's sake, the system we only consider is a closed shell system where there are $N/2$ different spatial orbits given $N$ electrons. We assume form of the atomic wavefunction is 
 
-In a paper entitled ``On $3N$ points in a plane'' Birch~\cite{Birch:1959} proves that any $3N$ points in the plane determine $N$ triangles that have a point in common. His motivation was the (planar) centerpoint theorem. Actually, he proves more, namely the case $d=2$ of Tverberg's theorem and states the general case as a conjecture.
+\begin{equation}
+\label{eq:atomic-wavefunction}
+    \Psi = Det(\phi_1(r_1), \phi_2(r_2), ..., \phi_N(r_N)) \cdot \prod_{i<j}\exp(\frac{r_{ij}}{2(1 + \beta_{ij}r_{ij})})
+\end{equation}
+where the determinant part encapsulates electron exchange effect while the second part includes electron correlation which is not taken care of by Hartree-Fock approximation. 
 
-Tverberg's original motivation was also the centerpoint theorem and he learned about Birch's result and conjecture only later. He proved it first for $d=3$ in 1963, and in full generality in 1964.  Here is, in his own words, how he found the proof:  ``I recall that the weather was bitterly cold in Manchester. I awoke very early one morning shivering, as the electric heater in the hotel room had gone off, and I did not have an extra shilling to feed the meter. So, instead of falling back to sleep, I reviewed the problem once more, and then the solution dawned on me!'' \cite{tve:recollections}.
+For the basis function set, Slater type orbitals are used. 
+\subsection{SCF}
 
-\section{Topological versions}\label{section-topological}
+\subsection{VMC}
 
-\section{Colorful versions}\label{section-colored}
+\subsection{Combintation}
 
-\section{The structure of Tverberg partitions}\label{section-intersection}
 
-\section{Universal Tverberg partitions}\label{section-universal}
+\section{Initialization}
 
-\section{Applications of Tverberg's theorem}\label{section-applications}
+\subsection{SCF}
+\subsection{VMC}
 
-\section{Tverberg-type results in distinct settings}\label{section-spaces}
+\section{Results}
 
-\bibliographystyle{alpha}
-\bibliography{references} % see references.bib for bibliography management
+\section{Conclusion}
 
+\printbibliography % see references.bib for bibliography management
 \end{document}

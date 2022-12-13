@@ -1,50 +1,17 @@
-This is BibTeX, Version 0.99d
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: vmc.aux
-Reallocating 'name_of_file' (item size: 1) to 6 items.
-The style file: alpha.bst
-Reallocating 'name_of_file' (item size: 1) to 11 items.
-Database file #1: references.bib
-Warning--I didn't find a database entry for "?"
-You've used 9 entries,
-            2543 wiz_defined-function locations,
-            630 strings with 5958 characters,
-and the built_in function-call counts, 3756 in all, are:
-= -- 394
-> -- 123
-< -- 10
-+ -- 41
-- -- 39
-* -- 251
-:= -- 592
-add.period$ -- 31
-call.type$ -- 9
-change.case$ -- 50
-chr.to.int$ -- 9
-cite$ -- 9
-duplicate$ -- 172
-empty$ -- 296
-format.name$ -- 54
-if$ -- 793
-int.to.chr$ -- 1
-int.to.str$ -- 0
-missing$ -- 10
-newline$ -- 49
-num.names$ -- 27
-pop$ -- 51
-preamble$ -- 1
-purify$ -- 60
-quote$ -- 0
-skip$ -- 133
-stack$ -- 0
-substring$ -- 255
-swap$ -- 38
-text.length$ -- 10
-text.prefix$ -- 6
-top$ -- 0
-type$ -- 68
-warning$ -- 0
-while$ -- 38
-width$ -- 13
-write$ -- 123
-(There was 1 warning)
+[0] Config.pm:306> INFO - This is Biber 2.18
+[0] Config.pm:309> INFO - Logfile is 'vmc.blg'
+[63] biber-darwin:340> INFO - === Mon Dec 12, 2022, 19:23:16
+[78] Biber.pm:418> INFO - Reading 'vmc.bcf'
+[162] Biber.pm:978> INFO - Found 6 citekeys in bib section 0
+[175] Biber.pm:4401> INFO - Processing section 0
+[185] Biber.pm:4592> INFO - Looking for bibtex file 'references.bib' for section 0
+[186] bibtex.pm:1713> INFO - LaTeX decoding ...
+[195] bibtex.pm:1518> INFO - Found BibTeX data source 'references.bib'
+[245] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[245] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[245] Biber.pm:4221> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[245] Biber.pm:4227> INFO - No sort tailoring available for locale 'en-US'
+[254] bbl.pm:654> INFO - Writing 'vmc.bbl' with encoding 'UTF-8'
+[257] bbl.pm:757> INFO - Output to vmc.bbl
+[257] Biber.pm:130> WARN - legacy month field 'Apr' in entry 'First_VMC' is not an integer - this will probably not sort properly.
+[257] Biber.pm:132> INFO - WARNINGS: 1

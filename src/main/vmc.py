@@ -58,18 +58,14 @@ def local_energy(r, wave_function):
 
     # Electron-proton contribution
     for i in range(NUM_OF_PARTICLES):
-        r_single_particle = 0.0
-        for j in range(DIMENSION):
-            r_single_particle += r[i, j]**2
-        e_potential -= CHARGE/math.sqrt(r_single_particle)
+        r_single_particle = r_abs(r[i])
+        e_potential -= CHARGE/r_single_particle
 
     # Electron-electron contribution
     for i1 in range(NUM_OF_PARTICLES-1):
         for i2 in range(i1+1, NUM_OF_PARTICLES):
-            r_12 = 0.0
-            for j in range(DIMENSION):
-                r_12 += (r[i1, j] - r[i2, j])**2
-            e_potential += 1/math.sqrt(r_12)
+            r_12 = r_abs(r[i1] - r[i2])
+            e_potential += 1/r_12
 
     return e_potential + e_kinetic
 
@@ -133,8 +129,8 @@ neighbor_func = lambda v: v + np.random.uniform(-1, 1, 2) * PARAM_STEP_LENGTH
 
 # vectorize simulated_annealing 
 evaluate_energy = np.vectorize(evaluate_energy, excluded=['num_cycles', 'thermalization'])
-alpha_rgn = np.arange(1.0, 2.1, 0.1)
-beta_rgn = np.arange(1.0, 2.0, 0.1)
+alpha_rgn = np.linspace(1.6, 2.0, 11)
+beta_rgn = np.linspace(1.2, 1.9, 11)
 alpha_mesh, beta_mesh = np.meshgrid(alpha_rgn, beta_rgn)
 
 
