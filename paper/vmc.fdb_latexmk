@@ -1,11 +1,11 @@
 # Fdb version 3
-["biber vmc"] 1670967172 "vmc.bcf" "vmc.bbl" "vmc" 1670967185
-  "references.bib" 1670962053 6117 cf9d2117d27424b0f177b7e2cf7efbdc ""
-  "vmc.bcf" 1670967185 108063 36281715eb7bf1d4b7c4f86e14bcf8a5 "pdflatex"
+["biber vmc"] 1671053647 "vmc.bcf" "vmc.bbl" "vmc" 1671055202
+  "references.bib" 1671052959 8692 0755f90266110e42b056ca1966f3669c ""
+  "vmc.bcf" 1671055202 108649 e522d7dfa416598d3ffaad3816ed46fb "pdflatex"
   (generated)
   "vmc.bbl"
   "vmc.blg"
-["pdflatex"] 1670967184 "/Users/wang/Library/CloudStorage/OneDrive-TheOhioStateUniversity/22 Autumn/quantum many body/Term paper/paper/vmc.tex" "vmc.pdf" "vmc" 1670967185
+["pdflatex"] 1671055200 "/Users/wang/Library/CloudStorage/OneDrive-TheOhioStateUniversity/22 Autumn/quantum many body/Term paper/paper/vmc.tex" "vmc.pdf" "vmc" 1671055202
   "/Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex/pdftex.map" 1670961886 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "/Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1670337532 12668 ac98c975f870d0763de9cb206532781e ""
   "/Users/wang/Library/Application Support/MiKTeX/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt" 1665724249 10796050 3de8c300ba420f5015a6bc84919994be ""
@@ -131,15 +131,20 @@
   "/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1670002381 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty" 1121302610 22049 adc8323c809ccc2c21f05c93c1fe6ff3 ""
   "/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/url/url.sty" 1665717638 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "/Users/wang/Library/CloudStorage/OneDrive-TheOhioStateUniversity/22 Autumn/quantum many body/Term paper/paper/vmc.tex" 1670967182 16368 f5b81a1b454b139f82bc720910e7485a ""
+  "/Users/wang/Library/CloudStorage/OneDrive-TheOhioStateUniversity/22 Autumn/quantum many body/Term paper/paper/vmc.tex" 1671055199 24251 7cbf381246342d1f786a94a03c701763 ""
   "figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg" 1670961636 69413 4d2209913a4cc7824c9da86c00872390 ""
+  "figs/Be_annealing.png" 1671037168 119051 e145d6edb720abb33f0a11d4cf226712 ""
+  "figs/Effective_atomic_number.png" 1671040737 149152 7876f0d5be216c0ce65d14e9ca26ca34 ""
+  "figs/He_with_beta.png" 1671037168 89457 7852600c5ccea9ad9ba86d535d234cd6 ""
+  "figs/He_with_beta_hr.png" 1671037168 163344 46f0d5155373ab5a4e7e7d5750397c34 ""
+  "figs/He_without_beta.png" 1671047763 87712 5b984ce686eb42c08e06413753f6bea1 ""
   "figs/scf-procedure.png" 1670951335 62941 532ec66b6cccef0dbf91874fe77147c3 ""
   "figs/vmc-flowchart.png" 1670963442 149383 989ce6b007c64dc051178bb5676f4c9c ""
-  "vmc.aux" 1670967185 5632 901975083bbfd9600ebc76c7ca30ec75 "pdflatex"
-  "vmc.bbl" 1670967175 18472 fe880140a3452aaea927f91ef84e1b04 "biber vmc"
-  "vmc.out" 1670967185 1635 b4b722b4eb1bb8c47cb6db74656f41e3 "pdflatex"
-  "vmc.run.xml" 1670967185 2298 6669ad7303e287713a90940b4cfe0ee9 "pdflatex"
-  "vmc.tex" 1670967182 16368 f5b81a1b454b139f82bc720910e7485a ""
+  "vmc.aux" 1671055202 7812 f17d19a755275e1b66c058851c825a2a "pdflatex"
+  "vmc.bbl" 1671053650 26364 9c47e8ab88dfb23cae8747b09b57ebf4 "biber vmc"
+  "vmc.out" 1671055202 1525 c7d4edae6cde88f9025908594a4d4767 "pdflatex"
+  "vmc.run.xml" 1671055202 2298 6669ad7303e287713a90940b4cfe0ee9 "pdflatex"
+  "vmc.tex" 1671055199 24251 7cbf381246342d1f786a94a03c701763 ""
   (generated)
   "vmc.aux"
   "vmc.bcf"

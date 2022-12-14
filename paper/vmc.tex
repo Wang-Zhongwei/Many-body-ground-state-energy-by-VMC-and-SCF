@@ -38,10 +38,10 @@
 \maketitle
 
 \begin{abstract}\footnote[1]{Source code available on \href{https://github.com/Wang-Zhongwei/Many-body-ground-state-energy-by-VMC-and-SCF/tree/main}{Github}}
-This article presents numerical methods in solving the ground state of Fermion system, including self-consistent field (SCF) theory and variational monte carlo (VMC). 
+This article presents numerical methods for solving the ground state of the Fermion system, including self-consistent field (SCF) theory and Variational Monte Carlo (VMC). 
 As a demonstration of the algorithms, Helium and Beryllium atoms are solved independently by each algorithm in succession. 
-Then a combination of the two methods is used to produce better ground state for Beryllium atom. 
-It shows that each method alone produces results within 3\% of the exact value, while the combination of the two methods reduces the error to 0.1\% at least for the systems chosen in the article. (He and Be atoms)
+It shows that each method produces result within 1\% of the exact value. After considering the correlation term in VMC the error was further reduced to less than 0.01\%. However SCF does not include electron correlation while VMC is relatively slow. Future work could look into combining the two methods to achieve both high efficieny and accuracy. 
+
 \end{abstract}
 
 \section{Introduction}\label{section-introduction}
@@ -50,30 +50,30 @@ Hamiltonians for a Fermion system has a general expression as follows:
 \hat{H} = \frac{1}{2}\sum_{i}\nabla_i^2  - \sum_i \frac{Z}{r_i} + \frac{1}{2}\sum_{i \neq j} \frac{1}{|r_i-r_j|},
 \end{equation}
 \begin{itemize}
-    \item first two terms are called single body term, representing electron-nucleus interaction;
-    \item last term called many body term, representing electron-electron interaction, which can be then break down into 
+    \item first two terms are called single-body terms, representing electron-nucleus interaction;
+    \item last term called many-body term, representing electron-electron interaction, which can be then broken down into 
     direct term $J$ and exchange term $K$; 
 \end{itemize}
 Without the last term, system eigen states would be simply produced by Slater determinants. Otherwise, the system is not solvable analytically.
 
-Common numerical methods for solving many body quantum systems include Variational Monte Carlo (VMC) \cite{First_VMC} methods, density functional theory (DFT) \cite{First-DFT}, and Self-consistent field (SCF) \cite{Early-SCF} thoery. 
-These methods use various computational techniques to approximate the solutions to many body quantum systems. This article, in particular, uses self-consistent field (SCF) theory and Variational Monte Carlo (VMC) to solve the ground state of Helium and Beryllium. 
+Common numerical methods for solving many-body quantum systems include Variational Monte Carlo (VMC) \cite{First_VMC} methods, density functional theory (DFT) \cite{First-DFT}, and Self-consistent field (SCF) \cite{Early-SCF} theory. 
+These methods use various computational techniques to approximate the solutions to many-body quantum systems. This article, in particular, uses self-consistent field (SCF) theory and Variational Monte Carlo (VMC) to solve the ground state of Helium and Beryllium. 
 There are several mature libraries and software packages for quantum Monte Carlo and density functional theory simulation. For example, \href{https://www.quantum-espresso.org/}{Quantum ESPRESSO}, \href{https://qmcpack.org/}{QMCPACK}, \href{https://vallico.net/casinoqmc/}{CASINO} for VMC; \href{https://www.nwchem-sw.org/}{NWChem} and \href{https://dftbplus.org/}{DFTB+} for DFT. 
 
-But for the purpose of illumination only, in this article I opt to implement them ground up. For the next two chapters I am going to review the principles of the two algorithms and lay out the procedure to solve the specific problems in conern, which is ground state of Helium and Beryllium.
+But for the purpose of illumination only, in this article, I opt to implement them ground up. For the next two chapters, I am going to review the principles of the two algorithms and lay out the procedure to solve the specific problems in concern, which is the ground state of Helium and Beryllium.
 
 \section{Principle}
-In this chapter, derivation of the whole theory is not the main focus. One can refer to \cite{Derivation_of_Fock_matrix} \cite{Review_of_VMC} for detailed derivations. Instead, we review important conclusions about and stipulate notations for SCF and VMC.
+In this chapter, the derivation of the whole theory is not the main focus. One can refer to \cite{Derivation_of_Fock_matrix} \cite{Review_of_VMC} for detailed derivations. Instead, we review important conclusions about and stipulate notations for SCF and VMC.
 \subsection{Hartree-Fock equations}
 The Hartree-Fock self-consistent field (SCF) theory is a method used in quantum chemistry to approximate the wave function and energy of a many-electron system. 
-The theory is based on the Hartree-Fock approximation, which assumes that the many-electron wave function can be represented as a determinant, known as Slater determinant, of single-electron wave functions (often not orthogonal), or orbitals. 
-The SCF method involves iteratively solving the Hartree-Fock equations to determine the orbitals and the energy of the system, and then using these solutions as the starting point for the next iteration. 
+The theory is based on the Hartree-Fock approximation, which assumes that the many-electron wave function can be represented as a determinant, known as the Slater determinant, of single-electron wave functions (often not orthogonal), or orbitals. 
+The SCF method involves iteratively solving the Hartree-Fock equations to determine the orbitals and the energy of the system and then using these solutions as the starting point for the next iteration. 
 This process is repeated until the solutions converge to a self-consistent set of orbitals and energy, which represents the best approximation of the true wave function and energy of the system.
 
-Closed and open shell systems are usually treated differently. In a closed shell system, every electron got paired with another with the same spatial orbit but opposite spin so number of basis functions equal to one half of total number of electrons. The SCF procedure typically converges quickly and accurately, since the electrons are paired and the total spin is zero. In an open shell system, on the other hand, the SCF procedure may take longer to converge and may not be as accurate, due to the presence of unpaired electrons and non-zero total spin. \cite{closed-vs-open-shell} Considering the examples used in this article are inert gases, it makes more sense to use closed shell SCF.
+Closed and open-shell systems are usually treated differently. In a closed shell system, every electron got paired with another with the same spatial orbit but opposite spin so the number of basis functions is equal to one-half of the total number of electrons. The SCF procedure typically converges quickly and accurately, since the electrons are paired and the total spin is zero. In an open shell system, on the other hand, the SCF procedure may take longer to converge and may not be as accurate, due to the presence of unpaired electrons and non-zero total spin. \cite{closed-vs-open-shell} Considering the examples used in this article are inert gases, it makes more sense to use closed-shell SCF.
 
 
-Adapted from original Hamiltonian \ref{eq:hamiltonian}(How?). Hartree-Fock equation for a closed-shell atomic system reads as follows:
+Adapted from original Hamiltonian \ref{eq:hamiltonian}(How?). The Hartree-Fock equation for a closed-shell atomic system reads as follows:
 \cite{Fock_matrix_source}
 \begin{equation}
 \label{eq:hartree-fock}
@@ -110,7 +110,7 @@ where
     \item $(\mu a|a\nu)=\int{dv_1 dv_2 \psi_{\mu}^*(r_1)\psi_{a}(r_1) \frac{1}{r_{12}} \psi_a^*(r_2)\psi_{\nu}(r_2)}$; exchange term.
 \end{itemize}
 
-The relation between energy and Fock operator is:
+The relation between energy and the Fock operator is:
 \begin{equation}
     E(\Psi(r_1, r_2, ..., r_N)) = \sum_{\mu, \nu} (H_{\mu\nu} + \frac{1}{2}G_{\mu\nu}) = \frac{1}{2} \sum_{\mu, \nu} (H_{\mu\nu}^{core} + F_{\mu\nu})
 \end{equation}
@@ -131,35 +131,35 @@ is called density matrix.
 
 The advantage of this approach is that we can calculate and tabulate the matrix elements such as $(\mu\nu|\lambda\sigma)$ once and for all, which is very expensive to calculate. The disadvantage is that the basis set is not orthogonal, which makes the calculation of the energy more complicated. 
 
-By minimizing the energy functional $<\Psi|\hat{H}|\Psi>$ coefficients can be produced by solving eign equations over and over again. Each time plug in the old coefficients from the last loop and solve the eign equations again. This is called SCF procedure. The eigen equation to be solved is called Roothaan-Hall Equations \cite{Roothan-Hall}: 
+By minimizing the energy functional $<\Psi|\hat{H}|\Psi>$ coefficients can be produced by solving eigen equations over and over again. Each time plug in the old coefficients from the last loop and solve the eigen equations again. This is called SCF procedure. The eigen equation to be solved is called Roothaan-Hall Equations \cite{Roothan-Hall}: 
 
 \begin{equation}\label{eq:roothaan-hall}
     FC = S C \epsilon
 \end{equation}
 
-where S is the overlap matrix. $S_{ij} := \int{dv\phi^*_i(r)\phi_j(r)}$ The eigenvalues $\epsilon$ are the energies of the basis functions. The eigenvectors $C_{\mu i}$ are the coefficients of the basis functions. I will talk about the precise procedure of implementing solving Roothan-Hall equation by recursion in chapter \ref{s:scf-procedure}. 
+where S is the overlap matrix. $S_{ij} := \int{dv\phi^*_i(r)\phi_j(r)}$ The eigenvalues $\epsilon$ are the energies of the basis functions. The eigenvectors $C_{\mu i}$ are the coefficients of the basis functions. I will talk about the precise procedure of implementing solving the Roothan-Hall equation by recursion in chapter \ref{s:scf-procedure}. 
 \subsection{Variational Monte Carlo}
 
 
 \section{Procedure}
 \subsection{Model}
 
-For simplicity's sake, the system we only consider is a closed shell system where there are $N/2$ different spatial orbits given $N$ electrons. We assume form of the atomic wavefunction is 
+For simplicity's sake, the system we only consider is a closed shell system where there are $N/2$ different spatial orbits given $N$ electrons. We assume the form of the atomic wavefunction is 
 
 \begin{equation}
 \label{eq:atomic-wavefunction}
     \Psi = Det(\phi_1(r_1), \phi_2(r_2), ..., \phi_N(r_N)) \cdot \prod_{i<j}\exp(\frac{r_{ij}}{2(1 + \beta_{ij}r_{ij})})
 \end{equation}
-where the determinant part encapsulates electron exchange effect while the second part includes electron correlation which is not taken care of by Hartree-Fock approximation. 
+where the determinant part encapsulates the electron exchange effect while the second part includes electron correlation which is not taken care of by the Hartree-Fock approximation. 
 
-Slater type orbitals are used for basis functions: \cite{hjorthcomputational}
+Slater-type orbitals are used for basis functions: \cite{hjorthcomputational}
 \begin{itemize}
     \item $\phi_{1s}(r_i) = N_{1s}\exp(-\alpha_1 r_i)$
     \item $\phi_{2s}(r_i) = N_{2s}(1 - \alpha_2 r_i / 2)\exp(-\alpha_2 r_i / 2)$
     \item $\mathbf{\phi}_{2p}(r_i) = N_{2p} \alpha_3 \textbf{r} \exp(-\alpha_3 r_i/2)$
     \item $\vdots$
 \end{itemize}
-where $\alpha$ and $\beta$ reflects shielding effect and correlation effect physically. Those paramters are optimized by minimizing the energy of the system. Since SCF is usually faster than VMC, which will be proved in later implementations. All $\alpha$ will be optimized by SCF by finding the minimum of the convergent energy before all $\beta$ are optimized by VMC by using the very combination of $\alpha$.
+where $\alpha$ and $\beta$ reflect shielding and correlation effect physically. Those parameters are optimized by minimizing the energy of the system. Since SCF is usually faster than VMC, which will be proved in later implementations. All $\alpha$ will be optimized by SCF by finding the minimum of the convergent energy before all $\beta$ are optimized by VMC by using the very combination of $\alpha$.
 
 
 \subsection{SCF}\label{s:scf-procedure}
@@ -172,21 +172,21 @@ However, it is not a trivial eigen system problem because $F'$ is implicitly dep
     \item Specify system and basis set $\{\phi_1, ...,\phi_{N/2}\}$
     \item Calculate one and two-electron integrals
     \item Diagonalise the overlap matrix, to obtain a transformation matrix, $\chi = S^{-1/2}$
-    \item Provide initial guess as to the density matrix. 
-    \item Caclulate $G$ matrix ($2J-K$)  using $P$ and the two-electron integrals
-    \item Obtain Fock matrix from sum of the core Hamiltonian matrix and  $G$ matrix, $F=H^{core} + G$
-    \item Caclulate transformed Fock matrix $F'=\chi^{\dag} F \chi$
+    \item Provide an initial guess as to the density matrix. 
+    \item Calculate $G$ matrix ($2J-K$)  using $P$ and the two-electron integrals
+    \item Obtain Fock matrix from the sum of the core Hamiltonian matrix and  $G$ matrix, $F=H^{core} + G$
+    \item Calculate transformed Fock matrix $F'=\chi^{\dag} F \chi$
     \item Diagonalize $F'$ to get $C'$
-    \item Caclulate the real coefficient matrix $C=\chi C^{'}$
+    \item Calculate the real coefficient matrix $C=\chi C^{'}$
     \item These coefficients form the new matrix $P$
     \item Determine convergence of the density matrix, by comparing the new density matrix with the old density matrix within a specified criterion. If the convergence has not been met then return to step (5) with the new density matrix $P$ to form a new Fock matrix and repeat
     \item If convergence has been met then end the SCF cycle and return desired quantities, e.g. Energy, coefficient matrix.
 \end{enumerate}
 
-If convergence has been met then end the SCF cycle and return desired quantities, e.g. Energy, coefficient matrix. The process can be sumarized as following figure:
+If convergence has been met then end the SCF cycle and return desired quantities, e.g. Energy, coefficient matrix. The process can be summarized as the following figure:
 
 
-Now we think SCF as a black box. It takes into parameters like $\alpha$ and $\beta$ of the basis functions and produces energy and convergent coefficient matrix. The next goal is to find the optimal parameters that makes energy as low as possible. This would mean we need to search over the parameter space to find the best configuration of $\alpha$ and $\beta$. Brute force iteration can always acheive the goal, namely, iterate all possible combination of $\alpha$ and $\beta$ and record the lowest energy. Also we can vectorize and parallelize the code since results are independent for different set of parameters. However, as the number of parameters grows, time complexity grows exponentially. In that case we have to resort to simulated annealing to probe the optimal parameters. \cite{simulated-annealing}
+Now we think SCF as a black box. It takes into parameters like $\alpha$ and $\beta$ of the basis functions and produces energy and a convergent coefficient matrix. The next goal is to find the optimal parameters that make energy as low as possible. This would mean we need to search over the parameter space to find the best configuration of $\alpha$ and $\beta$. Brute force iteration can always achieve the goal, namely, iterate all possible combinations of $\alpha$ and $\beta$ and record the lowest energy. Also, we can vectorize and parallelize the code since the results are independent for a different set of parameters. However, as the number of parameters grows, time complexity grows exponentially. In that case, we have to resort to simulated annealing to probe the optimal parameters. \cite{simulated-annealing}
 
 The process of simulated annealing involves iteratively perturbing the current state of a system and then accepting or rejecting the new state based on its energy. If the new state has a lower energy, it is always accepted. If the new state has a higher energy, it is sometimes accepted, with the probability of acceptance determined by a "temperature" parameter. This temperature is gradually reduced over time, which helps the algorithm escape local minima and converge on the global minimum. Diagrammatically, the process looks like figure \ref{fig:scf flowchart}
 
@@ -212,24 +212,86 @@ In the second step, the trial wave function is used to generate a set of random 
 
 \begin{figure}
     \centering
-    \includegraphics[width=5cm]{figs/vmc-flowchart.png}
+    \includegraphics[width=6cm]{figs/vmc-flowchart.png}
     \caption{Flowchart of VMC algorithms}
     \label{fig:vmc flowchart}%
 \end{figure}
 
-\section{Initialization}
+\section{Initialization and Setup}
 
 \subsection{SCF}
+Prior to implementing SCF, we need to know all the matrix elements involved in equation \ref{eq:fock-representation}. Two electron integrals such as $T_{ij}$ and $V_{ij}$ as well as four electron integrals are first analytically evaluated by Mathematica file $src/main/MatrixElements.nb$. Solved expressions are then imported to python script $src/main/int.py$ so that given each $\alpha$ set, concrete values of matrix elements can be calculated and stored in directory $src/resources/hf$. 
+
+During the simulated annealing process, temperature function is chosen to be decreasing over loop number so that energy could converge to the minimum just like a real annealing process. Refer to the penalty factor (reciprocal of temperature) in $src/main/scf.py$. 
+
+Step length parameter is initially set to .5 and also decreases exponentially over time in order to get better accuracy. In this way, we can keep the local acceptance rate around 25\% all the time which is believed \cite{optimal-mc-acc-rate} to be the best acceptance rate for markov chain monte carlo considering both sampling efficiency and result accuracy.
 
 \subsection{VMC}
+Unlike SCF, VMC simulation has two sets of parameters $\alpha$ which is only included in SCF and $\beta$ which captures electron correlation. For the loop that evaluates the averaged local energy, position step length is chosen to be 1.0 Bohr radius in order to reduce covariance. Then we need to find out the optimal set of parameters that produce the lowest energy. There are two methods that try out every possible combination of $\alpha$ and $\beta$. 
 
+For a system with a small number of electrons, it is possible to iterate over the entire parameter space. For helium, $\alpha$ is chosen to be in the range of $[1, 2]$ and $\beta$ is chosen to be in the range of $[0.5, 1.5]$. For beryllium, $\alpha$ is chosen to be in the range of $[1.0, 2.0]$ and $\beta$ is chosen to be in the range of $[1.0, 1.9]$.
 
 \section{Results}
-\subsection{SCF--Beryllium}
+\subsection{SCF}
+\subsubsection*{Helium}
+Helium has 2 electrons which means we only need $\frac{2}{2}=1$ STO type function as basis. It shows that when $\alpha=1.69$, the converged energy produced by SCF is minimized to be -2.8477 (Hartree). 
+
+Compared with analytical variational method \cite{analytical_variatonal_He}. $\alpha=\frac{27}{16} = 1.6875$ and $E=-2.848$. Numerical result is very close to analytical result. 
+
+\subsubsection*{Beryllium}
+For Beryllium two STO basis are needed. After 200 loops of simulated annealing, we can see that minimized energy is $-14.698$, corresponding parameters are $\alpha_{1s}=3.68$ and $\alpha_{2s}=2.13$. Annealing energy and parameter trajectory are shown in figure \ref{fig:be-scf-annealing}.
+\begin{figure}
+    \centering
+    \includegraphics[width=12cm]{figs/Be_annealing.png}
+    \caption{Annealing energy and parameter trajectory for Beryllium}
+    \label{fig:be-scf-annealing}%
+\end{figure}
+
+Compared again with analytical result \cite{Be-perturbation} based on perturbation method. It shows both the parameters and energy agree perfectly with analytical results ($\alpha_{1s}=3.681$, $\alpha_{2s}=2.140$, $E_g=-14.698$). 
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=12cm]{figs/Effective_atomic_number.png}
+    \caption{Effective atomic number}
+    \label{fig:effective-atmoic-number}%
+\end{figure}
+
+Since we choose the STO orbitals which are the wavefunctions for hydrogen-like atom. Parameter $\alpha$ has a physical meaning of effective charge number that tells us information about electron shielding effect. So our result shows that the effective charge number for 1s electrons is 3.68 and for 2s electrons is 2.13. This agrees with result for screening constants \cite{screening-constants} which is $Z_{1s}=3.6848$ and $Z_{2s}=1.9120$. Refer to figure \ref{fig:effective-atmoic-number}. 
+
+Another thing worth mentioning here is that SCF is quite efficient. It took 0.24 seconds on my machine to finish 200 loops of simulated annealing. Not to mention from the figure \ref{fig:effective-atmoic-number} we can tell 200 loops are more than enough to approximate the correct answer. In this next subsection, we will see, however, VMC is not as efficient as SCF in producing result. 
+
 \subsection{VMC--Helium}
-\subsection{Combination}
+\subsubsection*{Helium without correlation term}
+Without considering correlation. VMC is expected to converge to the same energy as SCF. We iterate over $alpha$ from 1 to 2 with 0.1 as interval. Data stored in file $data/vmc/He.dat$, as is shown by figure \ref{fig:vmc-he}. Same as SCF, energy is minimized to be $-2.84$ around $\alpha = 1.7$. 
+\begin{figure}
+    \centering
+    \includegraphics[width=12cm]{figs/He_without_beta.png}
+    \caption{VMC for helium}
+    \label{fig:vmc-he}%
+\end{figure}
+\subsubsection*{Helium with correlation term}
+When correlation term in equation \ref{eq:atomic-wavefunction} is considered, one would expect energy would be even lower than the case without correlation. To speed up the algorithm, I vectorized the VMC algorithm by numpy.vectorize() and parallelized it by assigning 4 workers using multiprocessing.Pool(). That being said, it still took over 4 mins to finish 11 * 11 * 100000 monte carlo cycles. 
+
+Figure \ref{fig:vmc-he-with-correlation} shows the parameter domain where energy is closed to minima, in which (a) has a 6 * 6 resolution and (b) has a 11 * 11 resolution. When $\alpha=1.8$ $\beta=1.5$, energy is minimized to be around $-2.90$, which agrees very well with the value $-2.9034$from atomic database \cite{database-he}. 
+
+\begin{figure}
+    \centering
+    \subfloat[\centering 6 * 6 sample points]{{\includegraphics[width=6cm]{figs/He_with_beta.png} }}%
+    \qquad
+    \subfloat[\centering 11 * 11 sample points]{{\includegraphics[width=6cm]{figs/He_with_beta_hr.png} }}%
+    \caption{VMC for Helium}%
+    \label{fig:vmc-he-with-correlation}%
+\end{figure}
+
 
 \section{Conclusion}
+The SCF (Self-Consistent Field) method and the VMC (Variational Monte Carlo) method are two different approaches for calculating the ground state of a quantum many-body system.
+
+The SCF method is a type of iterative method that starts with an initial guess for the wave function of the system, and then uses that wave function to calculate the electronic density of the system. This density is then used to construct a new wave function, which is used to calculate a new density, and so on. The process is repeated until the wave function and density converge to a self-consistent solution.
+
+The VMC method, on the other hand, uses a variational approach to approximate the ground state wave function of the system. In this method, a trial wave function is chosen and its parameters are adjusted to minimize the energy of the system. The result is an approximate wave function that provides a good description of the ground state of the system.
+
+In this article, we reviewed the basic concepts in SCF and VMC methods. We also implemented the SCF method for the helium and beryllium atoms and the VMC method for the helium atom with correlation term. The results show that both methods produce pretty accurate ground state energy compared with analytical and experimental data \cite{analytical_variatonal_He} \cite{Be-perturbation} \cite{database-he}. The results also show that the SCF method is more efficient than the VMC method in calculating the ground state of a quantum many-body system. But it does not incorporate the correlation term, which could be important for some types of quantum systems. It naturally follows that in order to achieve the best efficiency and accuracy, we could first solve the optimal set of $\alpha$ by using SCF method and then plug them in the VMC method, varying $\beta$ only to find the best set of $\beta$ for correlation terms. As a result, future articles could aim for combining the SCF and VMC methods in order to achieve the best trade-off of efficiency and accuracy.
 
 \printbibliography % see references.bib for bibliography management
 \end{document}

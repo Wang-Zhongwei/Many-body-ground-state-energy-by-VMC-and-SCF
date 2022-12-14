@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2022.10.14)  13 DEC 2022 16:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2022.10.14)  14 DEC 2022 17:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -582,41 +582,69 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex/pdftex.map}] [2] [3] [4] [5]
-<figs/scf-procedure.png, id=156, 890.5772pt x 481.04718pt>
+<figs/scf-procedure.png, id=152, 890.5772pt x 481.04718pt>
 File: figs/scf-procedure.png Graphic file (type png)
 <use figs/scf-procedure.png>
 Package pdftex.def Info: figs/scf-procedure.png  used on input line 195.
 (pdftex.def)             Requested size: 142.26378pt x 76.84433pt.
-<figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg, id=158, 853.1875pt x 822.07124pt>
+<figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg, id=154, 853.1875pt x 822.07124pt>
 File: figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg Graphic file (type jpg)
 <use figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg>
 Package pdftex.def Info: figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg  used on input line 197.
 (pdftex.def)             Requested size: 142.26378pt x 137.06589pt.
  [6 <./figs/scf-procedure.png> <./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg>]
-<figs/vmc-flowchart.png, id=174, 514.92375pt x 769.87625pt>
+<figs/vmc-flowchart.png, id=170, 514.92375pt x 769.87625pt>
 File: figs/vmc-flowchart.png Graphic file (type png)
 <use figs/vmc-flowchart.png>
 Package pdftex.def Info: figs/vmc-flowchart.png  used on input line 215.
-(pdftex.def)             Requested size: 142.26378pt x 212.69753pt.
- [7 <./figs/vmc-flowchart.png>] [8] [9] (vmc.aux)
+(pdftex.def)             Requested size: 170.71652pt x 255.23468pt.
+ [7 <./figs/vmc-flowchart.png>]
+<figs/Be_annealing.png, id=182, 722.7pt x 361.35pt>
+File: figs/Be_annealing.png Graphic file (type png)
+<use figs/Be_annealing.png>
+Package pdftex.def Info: figs/Be_annealing.png  used on input line 245.
+(pdftex.def)             Requested size: 341.43306pt x 170.71672pt.
+<figs/Effective_atomic_number.png, id=184, 820.06375pt x 416.55624pt>
+File: figs/Effective_atomic_number.png Graphic file (type png)
+<use figs/Effective_atomic_number.png>
+Package pdftex.def Info: figs/Effective_atomic_number.png  used on input line 254.
+(pdftex.def)             Requested size: 341.43306pt x 173.4333pt.
+ [8]
+<figs/He_without_beta.png, id=201, 578.16pt x 361.35pt>
+File: figs/He_without_beta.png Graphic file (type png)
+<use figs/He_without_beta.png>
+Package pdftex.def Info: figs/He_without_beta.png  used on input line 268.
+(pdftex.def)             Requested size: 341.43306pt x 213.39314pt.
+ [9 <./figs/Be_annealing.png> <./figs/Effective_atomic_number.png>]
+<figs/He_with_beta.png, id=213, 433.62pt x 289.08pt>
+File: figs/He_with_beta.png Graphic file (type png)
+<use figs/He_with_beta.png>
+Package pdftex.def Info: figs/He_with_beta.png  used on input line 279.
+(pdftex.def)             Requested size: 170.71652pt x 113.8126pt.
+<figs/He_with_beta_hr.png, id=214, 433.62pt x 289.08pt>
+File: figs/He_with_beta_hr.png Graphic file (type png)
+<use figs/He_with_beta_hr.png>
+Package pdftex.def Info: figs/He_with_beta_hr.png  used on input line 281.
+(pdftex.def)             Requested size: 170.71652pt x 113.8126pt.
+ [10 <./figs/He_without_beta.png> <./figs/He_with_beta.png> <./figs/He_with_beta_hr.png>] [11] [12] (vmc.aux)
 Package rerunfilecheck Info: File `vmc.out' has not changed.
-(rerunfilecheck)             Checksum: B4B722B4EB1BB8C47CB6DB74656F41E3;1635.
+(rerunfilecheck)             Checksum: C7D4EDAE6CDE88F9025908594A4D4767;1525.
 Package logreq Info: Writing requests to 'vmc.run.xml'.
 \openout1 = `vmc.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 18672 strings out of 475386
- 334864 string characters out of 2768911
- 1083240 words of memory out of 3000000
- 39787 multiletter control sequences out of 15000+600000
+ 18745 strings out of 475386
+ 337028 string characters out of 2768911
+ 1083796 words of memory out of 3000000
+ 39838 multiletter control sequences out of 15000+600000
  482300 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,16n,79p,1173b,1583s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,16n,79p,1248b,1583s stack positions out of 10000i,1000n,20000p,200000b,80000s
  </Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmex10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr6.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmti10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on vmc.pdf (9 pages, 459833 bytes).
+Output written on vmc.pdf (12 pages, 938913 bytes).
 PDF statistics:
- 308 PDF objects out of 1000 (max. 8388607)
- 66 named destinations out of 1000 (max. 500000)
- 144 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 370 PDF objects out of 1000 (max. 8388607)
+ 83 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -235,15 +235,15 @@ if __name__ == '__main__':
     atom = num_to_atom.get(Nelec)
 
     # initialize alphas
-    alphas = np.array([3.67, 1.91])
+    alphas = np.array([2, 2])
     # initialize number of trial steps
-    cycles = 100
+    cycles = 200
     # initial step length
     init_len = 0.5
     # final step length aka prevision for alpha
     final_len = 0.005
     # penalty factor for energy increase, equivalent to temperature reciprocal
-    penalty = lambda i: 6 * (i + 5)
+    penalty = lambda i: 8 * (i + 4) * (i + 1)
 
     # use exponential decay learning rate
     def step_length(cur_step, init_len, final_len):
@@ -265,7 +265,7 @@ if __name__ == '__main__':
         trial_energy, C_mat = scf(Nelec, trial_alphas)
 
         if (trial_energy > current_energy and
-                np.random.rand() > np.exp(-penalty(i) * (i + 1) * (trial_energy - current_energy) / np.abs(current_energy))):
+                np.random.rand() > np.exp(-penalty(i) *(trial_energy - current_energy) / np.abs(current_energy))):
             # reject the trial
             continue
 

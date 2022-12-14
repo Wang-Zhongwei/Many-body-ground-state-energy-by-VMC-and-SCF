@@ -19,6 +19,49 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{screening-constants}{article}{}
+      \name{author}{2}{}{%
+        {{hash=5bd2651c87c55c62b615727042c6d0ac}{%
+           family={Clementi},
+           familyi={C\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=1b11f9063fe3f5bedd7e7c9c510b6035}{%
+           family={Raimondi},
+           familyi={R\bibinitperiod},
+           given={D.\bibnamedelimi L.},
+           giveni={D\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{4ed5d71ec08b343e32c8f415a7abb644}
+      \strng{fullhash}{4ed5d71ec08b343e32c8f415a7abb644}
+      \strng{bibnamehash}{4ed5d71ec08b343e32c8f415a7abb644}
+      \strng{authorbibnamehash}{4ed5d71ec08b343e32c8f415a7abb644}
+      \strng{authornamehash}{4ed5d71ec08b343e32c8f415a7abb644}
+      \strng{authorfullhash}{4ed5d71ec08b343e32c8f415a7abb644}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Journal of Chemical Physics}
+      \field{number}{11}
+      \field{title}{Atomic Screening Constants from SCF Functions}
+      \field{volume}{38}
+      \field{year}{1963}
+      \field{pages}{2686\bibrangedash 2689}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1063/1.1733573
+      \endverb
+      \verb{eprint}
+      \verb https://doi.org/10.1063/1.1733573
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1063/1.1733573
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1063/1.1733573
+      \endverb
+    \endentry
     \entry{Early-SCF}{article}{}
       \name{author}{1}{}{%
         {{hash=c1e29514cfedcf46098d61829b0126d2}{%
@@ -88,6 +131,34 @@
       \field{year}{2007}
       \field{pages}{3057\bibrangedash 3098}
       \range{pages}{42}
+    \endentry
+    \entry{analytical_variatonal_He}{book}{}
+      \name{author}{1}{}{%
+        {{hash=a00328547222c4a2a201442ee59dccfd}{%
+           family={Griffiths},
+           familyi={G\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{a00328547222c4a2a201442ee59dccfd}
+      \strng{fullhash}{a00328547222c4a2a201442ee59dccfd}
+      \strng{bibnamehash}{a00328547222c4a2a201442ee59dccfd}
+      \strng{authorbibnamehash}{a00328547222c4a2a201442ee59dccfd}
+      \strng{authornamehash}{a00328547222c4a2a201442ee59dccfd}
+      \strng{authorfullhash}{a00328547222c4a2a201442ee59dccfd}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{chapter}{8.2}
+      \field{edition}{3rd}
+      \field{title}{Introduction to Quantum Mechanics}
+      \field{year}{2018}
+      \field{pages}{427}
+      \range{pages}{1}
     \endentry
     \entry{hjorthcomputational}{article}{}
       \name{author}{1}{}{%
@@ -361,6 +432,123 @@
       \endverb
       \verb{url}
       \verb https://link.aps.org/doi/10.1103/RevModPhys.23.69
+      \endverb
+    \endentry
+    \entry{optimal-mc-acc-rate}{article}{}
+      \name{author}{2}{}{%
+        {{hash=5ff69afbcbce77275be48b6fd4716fc3}{%
+           family={Sherlock},
+           familyi={S\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod}}}%
+        {{hash=f5fe3a5f837aeaf0a007e515ca5b8033}{%
+           family={Roberts},
+           familyi={R\bibinitperiod},
+           given={Gareth},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {Bernoulli Society for Mathematical Statistics}%
+        {Probability}%
+      }
+      \strng{namehash}{30b687028d2cf02000cbd9d29880c2cb}
+      \strng{fullhash}{30b687028d2cf02000cbd9d29880c2cb}
+      \strng{bibnamehash}{30b687028d2cf02000cbd9d29880c2cb}
+      \strng{authorbibnamehash}{30b687028d2cf02000cbd9d29880c2cb}
+      \strng{authornamehash}{30b687028d2cf02000cbd9d29880c2cb}
+      \strng{authorfullhash}{30b687028d2cf02000cbd9d29880c2cb}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Bernoulli}
+      \field{number}{3}
+      \field{title}{{Optimal scaling of the random walk Metropolis on elliptically symmetric unimodal targets}}
+      \field{volume}{15}
+      \field{year}{2009}
+      \field{pages}{774\bibrangedash 798}
+      \range{pages}{25}
+      \verb{doi}
+      \verb 10.3150/08-BEJ176
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.3150/08-BEJ176
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.3150/08-BEJ176
+      \endverb
+      \keyw{optimal acceptance rate,Optimal scaling,Random walk Metropolis}
+    \endentry
+    \entry{database-he}{article}{}
+      \name{author}{1}{}{%
+        {{hash=48b8f31e124a5760b405505f9447b57b}{%
+           family={Team},
+           familyi={T\bibinitperiod},
+           given={NIST\bibnamedelima ASD},
+           giveni={N\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{48b8f31e124a5760b405505f9447b57b}
+      \strng{fullhash}{48b8f31e124a5760b405505f9447b57b}
+      \strng{bibnamehash}{48b8f31e124a5760b405505f9447b57b}
+      \strng{authorbibnamehash}{48b8f31e124a5760b405505f9447b57b}
+      \strng{authornamehash}{48b8f31e124a5760b405505f9447b57b}
+      \strng{authorfullhash}{48b8f31e124a5760b405505f9447b57b}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{journaltitle}{NIST Atomic Spectra Database Ionization Energies Data}
+      \field{volume}{Gaithersburg, MD}
+      \verb{urlraw}
+      \verb https://physics.nist.gov/PhysRefData/ASD/ionEnergy.html
+      \endverb
+      \verb{url}
+      \verb https://physics.nist.gov/PhysRefData/ASD/ionEnergy.html
+      \endverb
+    \endentry
+    \entry{Be-perturbation}{article}{}
+      \name{author}{2}{}{%
+        {{hash=ec0dd69d6bd2546effecdcf0c41c0000}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Feng},
+           giveni={F\bibinitperiod}}}%
+        {{hash=9df2e40ebe4595ffc5986c6ef0e18f45}{%
+           family={Meng},
+           familyi={M\bibinitperiod},
+           given={Lijuan},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {Chinese Physical Society}%
+        {IOP Publishing Ltd}%
+      }
+      \strng{namehash}{097631706e227846443f1ed4ff9549ac}
+      \strng{fullhash}{097631706e227846443f1ed4ff9549ac}
+      \strng{bibnamehash}{097631706e227846443f1ed4ff9549ac}
+      \strng{authorbibnamehash}{097631706e227846443f1ed4ff9549ac}
+      \strng{authornamehash}{097631706e227846443f1ed4ff9549ac}
+      \strng{authorfullhash}{097631706e227846443f1ed4ff9549ac}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We present a perturbation study of the ground-state energy of the beryllium atom by incorporating double parameters in the atom’s Hamiltonian. The eigenvalue of the Hamiltonian is then solved with a double-fold perturbation scheme, where the spin–spin interaction of electrons from different shells of the atom is also considered. Calculations show that the obtained ground-state energy is in satisfactory agreement with experiment. It is found that the Coulomb repulsion of the inner-shell electrons enhances the effective nuclear charge seen by the outer-shell electrons, and the shielding effect of the outer-shell electrons to the nucleus is also notable compared with that of the inner-shell electrons.}
+      \field{journaltitle}{Chinese Physics B}
+      \field{month}{9}
+      \field{number}{9}
+      \field{title}{Ground-state energy of beryllium atom with parameter perturbation method*}
+      \field{volume}{27}
+      \field{year}{2018}
+      \field{pages}{093101}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1674-1056/27/9/093101
+      \endverb
+      \verb{urlraw}
+      \verb https://dx.doi.org/10.1088/1674-1056/27/9/093101
+      \endverb
+      \verb{url}
+      \verb https://dx.doi.org/10.1088/1674-1056/27/9/093101
       \endverb
     \endentry
     \entry{simulated-annealing-flowchart}{article}{}
