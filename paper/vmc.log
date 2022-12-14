@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2022.10.14)  12 DEC 2022 20:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2022.10.14)  13 DEC 2022 16:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -472,43 +472,76 @@ Package biblatex Info: ... and expl3
 Package: xparse 2022-06-22 L3 Experimental document command parser
 )
 Package: blx-case-expl3 2022/07/12 v3.18b expl3 case changing code for biblatex
-))
-\c@theorem=\count410
-\@quotelevel=\count411
-\@quotereset=\count412
+)) (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+ (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+Package: caption 2022/03/01 v3.6b Customizing captions (AR)
+ (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
+\caption@tempdima=\dimen159
+\captionmargin=\dimen160
+\caption@leftmargin=\dimen161
+\caption@rightmargin=\dimen162
+\caption@width=\dimen163
+\caption@indent=\dimen164
+\caption@parindent=\dimen165
+\caption@hangindent=\dimen166
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count410
+\c@continuedfloat=\count411
+Package caption Info: hyperref package is loaded.
+)
+\c@KVtest=\count412
+\sf@farskip=\skip78
+\sf@captopadj=\dimen167
+\sf@capskip=\skip79
+\sf@nearskip=\skip80
+\c@subfigure=\count413
+\c@subfigure@save=\count414
+\c@lofdepth=\count415
+\c@subtable=\count416
+\c@subtable@save=\count417
+\c@lotdepth=\count418
+\sf@top=\skip81
+\sf@bottom=\skip82
+)
+\c@theorem=\count419
+\@quotelevel=\count420
+\@quotereset=\count421
  (vmc.aux)
 \openout1 = `vmc.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
  (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count413
-\scratchdimen=\dimen159
+\scratchcounter=\count422
+\scratchdimen=\dimen168
 \scratchbox=\box54
-\nofMPsegments=\count414
-\nofMParguments=\count415
+\nofMPsegments=\count423
+\nofMParguments=\count424
 \everyMPshowfont=\toks29
-\MPscratchCnt=\count416
-\MPscratchDim=\dimen160
-\MPnumerator=\count417
-\makeMPintoPDFobject=\count418
+\MPscratchCnt=\count425
+\MPscratchDim=\dimen169
+\MPnumerator=\count426
+\makeMPintoPDFobject=\count427
 \everyMPtoPDFconversion=\toks30
 ) (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -516,7 +549,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/00miktex/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 33.
+Package hyperref Info: Link coloring OFF on input line 36.
  (vmc.out) (vmc.out)
 \@outlinefile=\write4
 \openout4 = `vmc.out'.
@@ -534,36 +567,56 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'vmc.bbl' found.
  (vmc.bbl)
-Package biblatex Info: Reference section=0 on input line 33.
-Package biblatex Info: Reference segment=0 on input line 33.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 36.
+Package biblatex Info: Reference section=0 on input line 36.
+Package biblatex Info: Reference segment=0 on input line 36.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 39.
  (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 36.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 39.
  (/Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex/pdftex.map}] [2] [3] [4] (vmc.aux)
+{/Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex/pdftex.map}] [2] [3] [4] [5]
+<figs/scf-procedure.png, id=156, 890.5772pt x 481.04718pt>
+File: figs/scf-procedure.png Graphic file (type png)
+<use figs/scf-procedure.png>
+Package pdftex.def Info: figs/scf-procedure.png  used on input line 195.
+(pdftex.def)             Requested size: 142.26378pt x 76.84433pt.
+<figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg, id=158, 853.1875pt x 822.07124pt>
+File: figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg Graphic file (type jpg)
+<use figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg>
+Package pdftex.def Info: figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg  used on input line 197.
+(pdftex.def)             Requested size: 142.26378pt x 137.06589pt.
+ [6 <./figs/scf-procedure.png> <./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg>]
+<figs/vmc-flowchart.png, id=174, 514.92375pt x 769.87625pt>
+File: figs/vmc-flowchart.png Graphic file (type png)
+<use figs/vmc-flowchart.png>
+Package pdftex.def Info: figs/vmc-flowchart.png  used on input line 215.
+(pdftex.def)             Requested size: 142.26378pt x 212.69753pt.
+ [7 <./figs/vmc-flowchart.png>] [8] [9] (vmc.aux)
 Package rerunfilecheck Info: File `vmc.out' has not changed.
-(rerunfilecheck)             Checksum: D7AA039D03CD0AA398898C0C50DDE122;1320.
+(rerunfilecheck)             Checksum: B4B722B4EB1BB8C47CB6DB74656F41E3;1635.
 Package logreq Info: Writing requests to 'vmc.run.xml'.
 \openout1 = `vmc.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 17132 strings out of 475386
- 304326 string characters out of 2768911
- 1055866 words of memory out of 3000000
- 38300 multiletter control sequences out of 15000+600000
- 481371 words of font info for 75 fonts, out of 8000000 for 9000
+ 18672 strings out of 475386
+ 334864 string characters out of 2768911
+ 1083240 words of memory out of 3000000
+ 39787 multiletter control sequences out of 15000+600000
+ 482300 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,16n,77p,1047b,1455s stack positions out of 10000i,1000n,20000p,200000b,80000s
- </Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmex10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr6.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmti10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on vmc.pdf (4 pages, 236617 bytes).
+ 72i,16n,79p,1173b,1583s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ </Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmex10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr6.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmti10.pfb></Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on vmc.pdf (9 pages, 459833 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 31 named destinations out of 1000 (max. 500000)
- 105 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 308 PDF objects out of 1000 (max. 8388607)
+ 66 named destinations out of 1000 (max. 500000)
+ 144 words of extra memory for PDF output out of 10000 (max. 10000000)
 

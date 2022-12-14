@@ -29,7 +29,7 @@ def wave_function(r: np.ndarray, alpha: float, beta: float):
     for i in range(r.shape[0]):
         for j in range(i+1, r.shape[0]):
             r_ij = r_abs(r[i] - r[j])
-            wf *= np.exp(r_ij / (1 + beta * r_ij))
+            wf *= np.exp(r_ij / 2 / (1 + beta * r_ij))
     return wf
 
 
@@ -113,7 +113,7 @@ CHARGE = 2
 DIMENSION = 3
 MAX_VARIATIONS = 10
 THERMALIZATION = 10
-NUM_OF_CYCLES = 100000
+NUM_OF_CYCLES = 10000
 ELEC_STEP_LENGTH = 1.0
 PARAM_STEP_LENGTH = 0.1
 
@@ -129,8 +129,8 @@ neighbor_func = lambda v: v + np.random.uniform(-1, 1, 2) * PARAM_STEP_LENGTH
 
 # vectorize simulated_annealing 
 evaluate_energy = np.vectorize(evaluate_energy, excluded=['num_cycles', 'thermalization'])
-alpha_rgn = np.linspace(1.6, 2.0, 11)
-beta_rgn = np.linspace(1.2, 1.9, 11)
+alpha_rgn = np.linspace(1.5, 2.0, 11)
+beta_rgn = np.linspace(0, 2, 11)
 alpha_mesh, beta_mesh = np.meshgrid(alpha_rgn, beta_rgn)
 
 

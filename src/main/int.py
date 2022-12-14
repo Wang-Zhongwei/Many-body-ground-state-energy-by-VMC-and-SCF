@@ -25,7 +25,7 @@ def Sij(i: int, j: int, alphas: tuple):
         return Sij(j, i, alphas=alphas)
     if i == 1:
         if j == 2:
-            return 16 * np.sqrt(6 * alphas[i - 1]**3 * alphas[j - 1]**5) / (2 * alphas[i - 1] + alphas[j - 1])**4
+            return 32 * np.sqrt(2* alphas[i - 1]**3 * alphas[j - 1]**3) * (alphas[i - 1] - alphas[j - 1])/ (2 * alphas[i - 1] + alphas[j - 1])**4
 
 def Tij(i: int, j: int, alphas: tuple):
     """1-indexed kinetic energy matrix of basis functions
@@ -45,10 +45,10 @@ def Tij(i: int, j: int, alphas: tuple):
         if j == 1:
             return alphas[i - 1]**2 / 2
         if j == 2:
-            return -8 * alphas[i - 1] * (alphas[i - 1] - alphas[j - 1]) * np.sqrt(2/3 * alphas[i - 1]**3 * alphas[j - 1]**5) / (2 * alphas[i - 1] + alphas[i - 1])**4
+            return 4 * alphas[i - 1] * alphas[j - 1] * (4*alphas[i - 1] - alphas[j - 1]) * np.sqrt(2 * alphas[i - 1]**3 * alphas[j - 1]**3) / (2 * alphas[i - 1] + alphas[i - 1])**4
     if i == 2:
         if j == 2:
-            return alphas[j - 1]**2 / 2
+            return alphas[j - 1]**2 / 8
 
 def Vij(i: int, j: int, alphas: float, Z: float = 4):
     """1-indexed potential energy matrix of basis functions
@@ -68,7 +68,7 @@ def Vij(i: int, j: int, alphas: float, Z: float = 4):
         if j == 1:
             return -Z * alphas[i - 1]
         if j == 2:
-            return -8 * Z *np.sqrt(2/3 * alphas[i - 1]**3 * alphas[j - 1]**5) / (2 * alphas[i - 1] + alphas[j - 1])**3
+            return 4 * Z * (-2 * alphas[i - 1] + alphas[j - 1]) * np.sqrt(2 * alphas[i - 1]**3 * alphas[j - 1]**3) / (2 * alphas[i - 1] + alphas[j - 1])**3
     if i == 2:
         if j == 2:
             return -Z * alphas[j - 1] / 4
@@ -84,15 +84,15 @@ def tei(i: int, j: int, k: int, l: int, alphas: tuple):
     if index == 5: # 1 1 1 1
         return 5/8 * alphas[0] 
     elif index == 12: # 2 1 1 1
-        return -8 * np.sqrt(2/3 * alphas[0]**3 * alphas[1]**5) * (-1/(2*alphas[0] + alphas[1])**3 + (12*alphas[0] + alphas[1])/(6*alphas[0] + alphas[1])**4)
+        return -32 * alphas[0] * np.sqrt(2*alphas[0]**3 * alphas[1]**3) * (-264*alphas[0]**4 + 28*alphas[0]**3 * alphas[1] + 86*alphas[0]**2*alphas[1]**2 + 21*alphas[0]*alphas[1]**3 + alphas[1]**4) / (2*alphas[0] + alphas[1])**3 / (6*alphas[0] + alphas[1])**4
     elif index == 17: # 2 2 1 1 
-        return 1/4 * alphas[1]**5 * (1/alphas[1]**4 - (6*alphas[0] + alphas[1]) / (2*alphas[0] + alphas[1])**4)
+        return  alphas[0] * alphas[1] * (8*alphas[0]**4 + 20*alphas[0]**3 * alphas[1] + 12*alphas[0]**2 * alphas[1]**2 + 10*alphas[0]*alphas[1]**3 + alphas[1]**4)/ (2*alphas[0] + alphas[1])**5
     elif index == 14: # 2 1 2 1
-        return 176 * alphas[0]**3 * alphas[1]**5 / (2*alphas[0] + alphas[1])**7
+        return 16 * alphas[0]**3 * alphas[1]**3 * (20*alphas[0]**2 - 30*alphas[0]*alphas[1] + 13*alphas[1]**2)/ (2*alphas[0] + alphas[1])**7
     elif index == 19: # 2 2 2 1
-        return -np.sqrt(alphas[0]**3 * alphas[1]**15 / 6) * (-144/alphas[1]**4 + 768*(84*alphas[0]**2 + 140*alphas[0]*alphas[1] + 61*alphas[1]**2) / (2*alphas[0] + 3*alphas[1])**6) / (6 * (2*alphas[0] + alphas[1])**4)
+        return 8 * np.sqrt(2*alphas[0]**3 * alphas[1]**3) * alphas[1] * (32*alphas[0]**6 + 240*alphas[0]**5*alphas[1] + 544 *alphas[0]**4 * alphas[1]**2+ 680*alphas[0]**3 * alphas[1]**3 - 102*alphas[0]**2 * alphas[1]**4 - 729*alphas[0]*alphas[1]**5 - 345*alphas[1]**6) / (2*alphas[0] + alphas[1])**3 / (2*alphas[0] + 3*alphas[1])**6
     elif index == 20: # 2 2 2 2
-        return 93/512 * alphas[1]
+        return 77/512 * alphas[1]
 
 # vectorize matrix calculation
 Sij = np.vectorize(Sij, excluded=['alphas'])

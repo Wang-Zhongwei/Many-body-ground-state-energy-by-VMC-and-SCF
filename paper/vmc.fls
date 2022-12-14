@@ -605,6 +605,41 @@ INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3packages/xparse/xparse.sty
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3packages/xparse/xparse.sty
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3kernel/expl3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/subfig/subfig.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/keyval.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/caption/caption3.sty
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/tex/latex/graphics/keyval.sty
 INPUT ./vmc.aux
 INPUT vmc.aux
 INPUT vmc.aux
@@ -702,6 +737,30 @@ INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/pu
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/jknappen/ec/tcrm1095.tfm
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex/pdftex.map
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmbx6.tfm
+INPUT ./figs/scf-procedure.png
+INPUT ./figs/scf-procedure.png
+INPUT figs/scf-procedure.png
+INPUT ./figs/scf-procedure.png
+INPUT ./figs/scf-procedure.png
+INPUT ./figs/scf-procedure.png
+INPUT ./figs/scf-procedure.png
+INPUT ./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT ./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT ./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT ./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT ./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT ./figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg
+INPUT ./figs/vmc-flowchart.png
+INPUT ./figs/vmc-flowchart.png
+INPUT figs/vmc-flowchart.png
+INPUT ./figs/vmc-flowchart.png
+INPUT ./figs/vmc-flowchart.png
+INPUT ./figs/vmc-flowchart.png
+INPUT ./figs/vmc-flowchart.png
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmti10.tfm
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/tfm/public/cm/cmtt10.tfm
@@ -740,6 +799,8 @@ INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb
+INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /Users/wang/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfonts/cm/cmti10.pfb

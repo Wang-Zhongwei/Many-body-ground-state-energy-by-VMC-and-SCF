@@ -188,7 +188,7 @@ def scf(num_elec: int, alphas: tuple, resource_dir: str = None, data_dir: str = 
         utils.save_data(data_file, data)
         return print("All iteration data written to {}".format(data))
     else:
-        return current_energy
+        return current_energy, C
 
 
 def update_resource(alphas: tuple, resource_dir: str):
@@ -203,7 +203,7 @@ def update_resource(alphas: tuple, resource_dir: str):
     alphas = tuple(map(str, alphas))
 
     # fix: change to relative path later
-    script = "src/main/hf/int.py"
+    script = "src/main/int.py"
     # how to recognize the path of int.py?
     proc = subprocess.Popen(['python', script, resource_dir, *alphas])
     proc.wait()
@@ -235,7 +235,7 @@ if __name__ == '__main__':
     atom = num_to_atom.get(Nelec)
 
     # initialize alphas
-    alphas = np.array([3, 1])
+    alphas = np.array([3.67, 1.91])
     # initialize number of trial steps
     cycles = 100
     # initial step length
@@ -243,7 +243,7 @@ if __name__ == '__main__':
     # final step length aka prevision for alpha
     final_len = 0.005
     # penalty factor for energy increase, equivalent to temperature reciprocal
-    penalty = 50
+    penalty = lambda i: 6 * (i + 5)
 
     # use exponential decay learning rate
     def step_length(cur_step, init_len, final_len):
@@ -262,10 +262,10 @@ if __name__ == '__main__':
             (np.random.rand(*alphas.shape) - 0.5) * step_len
 
         # run scf without using resources to speed up
-        trial_energy = scf(Nelec, trial_alphas)
+        trial_energy, C_mat = scf(Nelec, trial_alphas)
 
         if (trial_energy > current_energy and
-                np.random.rand() > np.exp(-penalty * (i + 1) * (trial_energy - current_energy) / np.abs(current_energy))):
+                np.random.rand() > np.exp(-penalty(i) * (i + 1) * (trial_energy - current_energy) / np.abs(current_energy))):
             # reject the trial
             continue
 
@@ -286,4 +286,5 @@ if __name__ == '__main__':
 
     data = np.column_stack((alphas_data, energy_data))
     utils.save_data(data, os.path.join(out_dir, atom + '_annealing.dat'))
-    update_resource(alphas, 'src/resources/hf')
+    utils.save_data(C_mat, os.path.join(out_dir, atom + 'Optimized_C.dat'))
+    # update_resource(alphas, 'src/resources/hf')

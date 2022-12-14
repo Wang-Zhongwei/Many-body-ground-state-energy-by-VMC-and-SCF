@@ -3,6 +3,9 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{biblatex}
+\usepackage{subfig}
+
+
 \addbibresource{references.bib}
 
 \oddsidemargin 0pt
@@ -34,7 +37,7 @@
 
 \maketitle
 
-\begin{abstract}\footnote[0]{Source code available on \href{https://github.com/Wang-Zhongwei/Many-body-ground-state-energy-by-VMC-and-SCF/tree/main}{Github}}
+\begin{abstract}\footnote[1]{Source code available on \href{https://github.com/Wang-Zhongwei/Many-body-ground-state-energy-by-VMC-and-SCF/tree/main}{Github}}
 This article presents numerical methods in solving the ground state of Fermion system, including self-consistent field (SCF) theory and variational monte carlo (VMC). 
 As a demonstration of the algorithms, Helium and Beryllium atoms are solved independently by each algorithm in succession. 
 Then a combination of the two methods is used to produce better ground state for Beryllium atom. 
@@ -67,6 +70,9 @@ The theory is based on the Hartree-Fock approximation, which assumes that the ma
 The SCF method involves iteratively solving the Hartree-Fock equations to determine the orbitals and the energy of the system, and then using these solutions as the starting point for the next iteration. 
 This process is repeated until the solutions converge to a self-consistent set of orbitals and energy, which represents the best approximation of the true wave function and energy of the system.
 
+Closed and open shell systems are usually treated differently. In a closed shell system, every electron got paired with another with the same spatial orbit but opposite spin so number of basis functions equal to one half of total number of electrons. The SCF procedure typically converges quickly and accurately, since the electrons are paired and the total spin is zero. In an open shell system, on the other hand, the SCF procedure may take longer to converge and may not be as accurate, due to the presence of unpaired electrons and non-zero total spin. \cite{closed-vs-open-shell} Considering the examples used in this article are inert gases, it makes more sense to use closed shell SCF.
+
+
 Adapted from original Hamiltonian \ref{eq:hamiltonian}(How?). Hartree-Fock equation for a closed-shell atomic system reads as follows:
 \cite{Fock_matrix_source}
 \begin{equation}
@@ -92,13 +98,13 @@ One strong assumption of SCF is that the composite wavefunction can be written a
     \end{vmatrix} \\
 \end{align*}
 
-Remeber set of basis $\{\psi_1, ... , \psi_m\}$ is not neccessarily orthogonal. The Fock operator under the representation becomes:
+Remeber set of basis $\{\psi_1, ... , \psi_N\}$ is not neccessarily orthogonal. The Fock operator under the representation becomes:
 \begin{equation}\label{eq:fock-representation}
     F_{\mu\nu}=H^{core}_{\mu\nu} + G_{\mu\nu}
 \end{equation}
 where 
 \begin{itemize}
-    \item $H^{core}_{\mu \nu} = \int{dv1 \phi_{\mu}^*(r_1)\hat{h}_1(r_1)\phi_{\nu}(r_1)}$; $\hat{h}_1(r_1)=-\frac{1}{2}\nabla^2_1-\frac{Z}{r_1}$; single body term.
+    \item $H^{core}_{\mu \nu} = \int{dv_1 \phi_{\mu}^*(r_1)\hat{h}_1(r_1)\phi_{\nu}(r_1)}$; $\hat{h}_1(r_1)=-\frac{1}{2}\nabla^2_1-\frac{Z}{r_1}$; single body term.
     \item $G_{\mu\nu} = \sum_{a=1}^{N/2}(2(\mu\nu|aa)-(\mu a|a\nu))$
     \item $(\mu\nu|aa)=\int{dv_1 dv_2 \psi_{\mu}^*(r_1)\psi_{\nu}(r_1) \frac{1}{r_{12}} \psi_a^*(r_2)\psi_a(r_2)}$; direct term.
     \item $(\mu a|a\nu)=\int{dv_1 dv_2 \psi_{\mu}^*(r_1)\psi_{a}(r_1) \frac{1}{r_{12}} \psi_a^*(r_2)\psi_{\nu}(r_2)}$; exchange term.
@@ -106,15 +112,37 @@ where
 
 The relation between energy and Fock operator is:
 \begin{equation}
-    E(\Psi(r_1, r_2, ..., r_N)) = \sum_{\mu, \nu} (H_{\mu\nu} + \frac{1}{2}G_{\mu\nu}) = \frac{1}{2} \sum_{\mu, \nu} (H_{\mu\nu} + F_{\mu\nu})
+    E(\Psi(r_1, r_2, ..., r_N)) = \sum_{\mu, \nu} (H_{\mu\nu} + \frac{1}{2}G_{\mu\nu}) = \frac{1}{2} \sum_{\mu, \nu} (H_{\mu\nu}^{core} + F_{\mu\nu})
 \end{equation}
 
-However, it is more convient to choose another set of basis $\{\phi_1, \phi_2, ... \phi_N\}$ with relation $\psi_j = \sum_{i}\phi_{i} \cdot C_{ij}$, where $C_{ij}$ is called the coefficient matrix. 
+However, it is more convenient to choose another set of basis $\{\phi_1, \phi_2, ... \phi_N\}$ with relation $\psi_j = \sum_{i}\phi_{i} \cdot C_{ij}$, where $C_{ij}$ is called the coefficient matrix. After the transformation fock matrix of the system becomes:
 
+\begin{flalign*}
+    F_{\mu\nu} & = H_{\mu\nu} + \sum_{a}^{N/2}\sum_{\lambda, \sigma}C_{\lambda a}C_{\sigma a} (2(\mu\nu|\lambda\sigma) - (\mu\sigma|\lambda\nu)) \\ 
+    & = H_{\mu\nu} + \sum_{\lambda, \sigma} P_{\lambda\sigma}((\mu\nu|\lambda\sigma) - \frac{1}{2}(\mu\sigma|\lambda\nu))
+\end{flalign*}
+where 
+\begin{subequations}
+    \begin{align}
+        P_{\lambda\sigma} &= 2\sum_{a}^{N/2}C_{\lambda a}C_{\sigma a} 
+    \end{align}
+\end{subequations}
+is called density matrix.
+
+The advantage of this approach is that we can calculate and tabulate the matrix elements such as $(\mu\nu|\lambda\sigma)$ once and for all, which is very expensive to calculate. The disadvantage is that the basis set is not orthogonal, which makes the calculation of the energy more complicated. 
+
+By minimizing the energy functional $<\Psi|\hat{H}|\Psi>$ coefficients can be produced by solving eign equations over and over again. Each time plug in the old coefficients from the last loop and solve the eign equations again. This is called SCF procedure. The eigen equation to be solved is called Roothaan-Hall Equations \cite{Roothan-Hall}: 
+
+\begin{equation}\label{eq:roothaan-hall}
+    FC = S C \epsilon
+\end{equation}
+
+where S is the overlap matrix. $S_{ij} := \int{dv\phi^*_i(r)\phi_j(r)}$ The eigenvalues $\epsilon$ are the energies of the basis functions. The eigenvectors $C_{\mu i}$ are the coefficients of the basis functions. I will talk about the precise procedure of implementing solving Roothan-Hall equation by recursion in chapter \ref{s:scf-procedure}. 
 \subsection{Variational Monte Carlo}
 
 
 \section{Procedure}
+\subsection{Model}
 
 For simplicity's sake, the system we only consider is a closed shell system where there are $N/2$ different spatial orbits given $N$ electrons. We assume form of the atomic wavefunction is 
 
@@ -124,20 +152,82 @@ For simplicity's sake, the system we only consider is a closed shell system wher
 \end{equation}
 where the determinant part encapsulates electron exchange effect while the second part includes electron correlation which is not taken care of by Hartree-Fock approximation. 
 
-For the basis function set, Slater type orbitals are used. 
-\subsection{SCF}
+Slater type orbitals are used for basis functions: \cite{hjorthcomputational}
+\begin{itemize}
+    \item $\phi_{1s}(r_i) = N_{1s}\exp(-\alpha_1 r_i)$
+    \item $\phi_{2s}(r_i) = N_{2s}(1 - \alpha_2 r_i / 2)\exp(-\alpha_2 r_i / 2)$
+    \item $\mathbf{\phi}_{2p}(r_i) = N_{2p} \alpha_3 \textbf{r} \exp(-\alpha_3 r_i/2)$
+    \item $\vdots$
+\end{itemize}
+where $\alpha$ and $\beta$ reflects shielding effect and correlation effect physically. Those paramters are optimized by minimizing the energy of the system. Since SCF is usually faster than VMC, which will be proved in later implementations. All $\alpha$ will be optimized by SCF by finding the minimum of the convergent energy before all $\beta$ are optimized by VMC by using the very combination of $\alpha$.
+
+
+\subsection{SCF}\label{s:scf-procedure}
+Let's observe the roothaan-hall equation \ref{eq:roothaan-hall} again. $S$ is Hermitian ant thus can be Diagonalized using $S=T^{\dag} \Lambda T$ where $T$ is othornormal. Define another Hermitian matrix $ \chi = T^{\dag}\Lambda^{-1/2} T$ and . One can find that $\chi^{\dag}\chi = \chi^2 = S^{-1}$. Let define $F' = \chi^{\dag} F \chi$ and $C'=X^{-1}C$. Insert $\chi^{-1}\chi$ between $F$ and $C$, $S$ and $C$. We can have the eigen equation as follows:
+\begin{equation}
+    F' C' = C' \epsilon
+\end{equation} 
+However, it is not a trivial eigen system problem because $F'$ is implicitly dependent on its eigen vectors $C'$. To solve this, we need to first assume a plausible assumption about $C$ matrix use it as first guess to solve the eigen equation. Then we can use the eigen vectors $C'$ to calculate the new $F'$ and use it to solve the eigen equation again. This process is called recursion. The recursion is terminated when the difference between the new $F'$ and the old $F'$ is small enough. Summarizing the procedure of SCF:
+\begin{enumerate}
+    \item Specify system and basis set $\{\phi_1, ...,\phi_{N/2}\}$
+    \item Calculate one and two-electron integrals
+    \item Diagonalise the overlap matrix, to obtain a transformation matrix, $\chi = S^{-1/2}$
+    \item Provide initial guess as to the density matrix. 
+    \item Caclulate $G$ matrix ($2J-K$)  using $P$ and the two-electron integrals
+    \item Obtain Fock matrix from sum of the core Hamiltonian matrix and  $G$ matrix, $F=H^{core} + G$
+    \item Caclulate transformed Fock matrix $F'=\chi^{\dag} F \chi$
+    \item Diagonalize $F'$ to get $C'$
+    \item Caclulate the real coefficient matrix $C=\chi C^{'}$
+    \item These coefficients form the new matrix $P$
+    \item Determine convergence of the density matrix, by comparing the new density matrix with the old density matrix within a specified criterion. If the convergence has not been met then return to step (5) with the new density matrix $P$ to form a new Fock matrix and repeat
+    \item If convergence has been met then end the SCF cycle and return desired quantities, e.g. Energy, coefficient matrix.
+\end{enumerate}
+
+If convergence has been met then end the SCF cycle and return desired quantities, e.g. Energy, coefficient matrix. The process can be sumarized as following figure:
+
+
+Now we think SCF as a black box. It takes into parameters like $\alpha$ and $\beta$ of the basis functions and produces energy and convergent coefficient matrix. The next goal is to find the optimal parameters that makes energy as low as possible. This would mean we need to search over the parameter space to find the best configuration of $\alpha$ and $\beta$. Brute force iteration can always acheive the goal, namely, iterate all possible combination of $\alpha$ and $\beta$ and record the lowest energy. Also we can vectorize and parallelize the code since results are independent for different set of parameters. However, as the number of parameters grows, time complexity grows exponentially. In that case we have to resort to simulated annealing to probe the optimal parameters. \cite{simulated-annealing}
+
+The process of simulated annealing involves iteratively perturbing the current state of a system and then accepting or rejecting the new state based on its energy. If the new state has a lower energy, it is always accepted. If the new state has a higher energy, it is sometimes accepted, with the probability of acceptance determined by a "temperature" parameter. This temperature is gradually reduced over time, which helps the algorithm escape local minima and converge on the global minimum. Diagrammatically, the process looks like figure \ref{fig:scf flowchart}
+
+\begin{figure}
+    \centering
+    \subfloat[\centering SCF Procedure]{{\includegraphics[width=5cm]{figs/scf-procedure.png} }}%
+    \qquad
+    \subfloat[\centering Simulated Annealing Procedure\cite{simulated-annealing-flowchart}]{{\includegraphics[width=5cm]{figs/A-flowchart-of-the-simulated-annealing-algorithm.jpg} }}%
+    \caption{Flowchart of SCF algorithms}%
+    \label{fig:scf flowchart}%
+\end{figure}
 
 \subsection{VMC}
+The process of VMC involves two main steps: 
+\begin{enumerate}
+    \item Finding a trial wave function that is a good approximation of the true ground state wave function
+    \item Using Monte Carlo sampling to compute expectation values of the Hamiltonian with respect to the trial wave function.
+\end{enumerate}
 
-\subsection{Combintation}
+In the first step, the trial wave function is parameterized using a set of adjustable parameters. These parameters are chosen to minimize the so-called "variational energy", which is the expectation value of the Hamiltonian with respect to the trial wave function. This step is usually performed using some form of optimization algorithm, such as gradient descent or simulated annealing.
 
+In the second step, the trial wave function is used to generate a set of random samples from the many-body system. These samples are then used to compute the expectation values of the Hamiltonian and other physical observables. Because the trial wave function is a good approximation of the true ground state wave function, the expectation values computed using VMC are also good approximations of the true values. As is shown by figure \ref{fig:vmc flowchart}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5cm]{figs/vmc-flowchart.png}
+    \caption{Flowchart of VMC algorithms}
+    \label{fig:vmc flowchart}%
+\end{figure}
 
 \section{Initialization}
 
 \subsection{SCF}
+
 \subsection{VMC}
 
+
 \section{Results}
+\subsection{SCF--Beryllium}
+\subsection{VMC--Helium}
+\subsection{Combination}
 
 \section{Conclusion}
 

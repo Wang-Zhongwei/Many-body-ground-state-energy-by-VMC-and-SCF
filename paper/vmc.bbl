@@ -89,6 +89,55 @@
       \field{pages}{3057\bibrangedash 3098}
       \range{pages}{42}
     \endentry
+    \entry{hjorthcomputational}{article}{}
+      \name{author}{1}{}{%
+        {{hash=f1f1ee5e424a0bb746b54acd9e6851cf}{%
+           family={Hjorth-Jensen},
+           familyi={H\bibinithyphendelim J\bibinitperiod},
+           given={Morten},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{fullhash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{bibnamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authorbibnamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authornamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authorfullhash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{COMPUTATIONAL PHYSICS Morten Hjorth-Jensen}
+    \endentry
+    \entry{closed-vs-open-shell}{article}{}
+      \name{author}{1}{}{%
+        {{hash=8fd8386b4fe5ada1190471282cec73d6}{%
+           family={Lehtola\bibnamedelima S},
+           familyi={L\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Van\bibnamedelimb Alsenoy\bibnamedelima C},
+           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim C\bibinitperiod},
+           suffix={Blockhuys\bibnamedelima F},
+           suffixi={B\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \strng{namehash}{8fd8386b4fe5ada1190471282cec73d6}
+      \strng{fullhash}{8fd8386b4fe5ada1190471282cec73d6}
+      \strng{bibnamehash}{8fd8386b4fe5ada1190471282cec73d6}
+      \strng{authorbibnamehash}{8fd8386b4fe5ada1190471282cec73d6}
+      \strng{authornamehash}{8fd8386b4fe5ada1190471282cec73d6}
+      \strng{authorfullhash}{8fd8386b4fe5ada1190471282cec73d6}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Molecules}
+      \field{number}{25}
+      \field{title}{An Overview of Self-Consistent Field Calculations Within Finite Basis Sets}
+      \field{volume}{1218}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.3390/molecules25051218
+      \endverb
+    \endentry
     \entry{Fock_matrix_source}{book}{}
       \name{author}{1}{}{%
         {{hash=91274acbfeed9ab722580401c583e087}{%
@@ -235,6 +284,143 @@
       \field{year}{1983}
       \field{pages}{631\bibrangedash 656}
       \range{pages}{26}
+    \endentry
+    \entry{simulated-annealing}{article}{}
+      \name{author}{1}{}{%
+        {{hash=243bb3aea293b7da2250e7659f5c54c0}{%
+           family={Pincus},
+           familyi={P\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{243bb3aea293b7da2250e7659f5c54c0}
+      \strng{fullhash}{243bb3aea293b7da2250e7659f5c54c0}
+      \strng{bibnamehash}{243bb3aea293b7da2250e7659f5c54c0}
+      \strng{authorbibnamehash}{243bb3aea293b7da2250e7659f5c54c0}
+      \strng{authornamehash}{243bb3aea293b7da2250e7659f5c54c0}
+      \strng{authorfullhash}{243bb3aea293b7da2250e7659f5c54c0}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper considers the problem of minimizing a function F(x1, …, xn) over a closed, bounded region S in n-dimensional space under the assumption that there exists a unique minimizing point (z1, …, zn)ϵS. In a previous paper I represented the coordinates of the minimizing point as the limit of a ratio of integrals. The same type of ratio appears, in a different context, in statistical mechanics where a Monte Carlo method has been developed, by Metropolis et al., for its numerical evaluation. The purpose of this paper is to point out the connection of Metropolis's method with the above type of minimisation problem. The idea of the method is to associate with the minimization problem a Markov chain whose sample averages converge with probability one to (approximately) the minimizing point (z1, …, zn). The Markov chain should be easily realizable on a computer. An estimate of the error from sampling over a finite time period is given.}
+      \field{journaltitle}{Operations Research}
+      \field{number}{6}
+      \field{title}{Letter to the Editor—A Monte Carlo Method for the Approximate Solution of Certain Types of Constrained Optimization Problems}
+      \field{volume}{18}
+      \field{year}{1970}
+      \field{pages}{1225\bibrangedash 1228}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1287/opre.18.6.1225
+      \endverb
+      \verb{eprint}
+      \verb https://doi.org/10.1287/opre.18.6.1225
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1287/opre.18.6.1225
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1287/opre.18.6.1225
+      \endverb
+    \endentry
+    \entry{Roothan-Hall}{article}{}
+      \name{author}{1}{}{%
+        {{hash=4675483650acb9e51aae91d1e51043ac}{%
+           family={Roothaan},
+           familyi={R\bibinitperiod},
+           given={C.\bibnamedelimi C.\bibnamedelimi J.},
+           giveni={C\bibinitperiod\bibinitdelim C\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Physical Society}%
+      }
+      \strng{namehash}{4675483650acb9e51aae91d1e51043ac}
+      \strng{fullhash}{4675483650acb9e51aae91d1e51043ac}
+      \strng{bibnamehash}{4675483650acb9e51aae91d1e51043ac}
+      \strng{authorbibnamehash}{4675483650acb9e51aae91d1e51043ac}
+      \strng{authornamehash}{4675483650acb9e51aae91d1e51043ac}
+      \strng{authorfullhash}{4675483650acb9e51aae91d1e51043ac}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{2}
+      \field{journaltitle}{Rev. Mod. Phys.}
+      \field{month}{4}
+      \field{title}{New Developments in Molecular Orbital Theory}
+      \field{volume}{23}
+      \field{year}{1951}
+      \field{pages}{69\bibrangedash 89}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1103/RevModPhys.23.69
+      \endverb
+      \verb{urlraw}
+      \verb https://link.aps.org/doi/10.1103/RevModPhys.23.69
+      \endverb
+      \verb{url}
+      \verb https://link.aps.org/doi/10.1103/RevModPhys.23.69
+      \endverb
+    \endentry
+    \entry{simulated-annealing-flowchart}{article}{}
+      \name{author}{7}{}{%
+        {{hash=becb6a5ebe9590ae55f23e23a66da780}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Ai-Hua},
+           giveni={A\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=582c7611e1984fba7925ae963aba5dea}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Li-Peng},
+           giveni={L\bibinithyphendelim P\bibinitperiod}}}%
+        {{hash=1ea9938fcf457149a57010bc4a52557c}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Bin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=61c8632ced3e38e2a2655aa4d0efcf40}{%
+           family={Deng},
+           familyi={D\bibinitperiod},
+           given={Song},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d3a2e45acb815e215a5ad1e99547d520}{%
+           family={Song},
+           familyi={S\bibinitperiod},
+           given={Yan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=aeda71f62f8dad1c82a3d309adf4d4d6}{%
+           family={Qiu},
+           familyi={Q\bibinitperiod},
+           given={Hongbin},
+           giveni={H\bibinitperiod}}}%
+        {{hash=df9d5778b68ad8dc7793201f5d188c4c}{%
+           family={Pan},
+           familyi={P\bibinitperiod},
+           given={Sen},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{35bbe29a5076aff3f7c617c08b01817d}
+      \strng{fullhash}{f5bd5dbfe9b87d57eb278bf80f1fa3a4}
+      \strng{bibnamehash}{35bbe29a5076aff3f7c617c08b01817d}
+      \strng{authorbibnamehash}{35bbe29a5076aff3f7c617c08b01817d}
+      \strng{authornamehash}{35bbe29a5076aff3f7c617c08b01817d}
+      \strng{authorfullhash}{f5bd5dbfe9b87d57eb278bf80f1fa3a4}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Information}
+      \field{month}{12}
+      \field{title}{Traveling-Salesman-Problem Algorithm Based on Simulated Annealing and Gene-Expression Programming}
+      \field{volume}{10}
+      \field{year}{2018}
+      \field{pages}{7}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/info10010007
+      \endverb
     \endentry
   \enddatalist
 \endrefsection
